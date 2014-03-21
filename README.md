@@ -12,11 +12,11 @@ This is a headless example of how to implement an OAuth 1.0a Yelp API client. Th
 ```
 self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
         
-        [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
-            NSLog(@"response: %@", response);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error: %@", [error description]);
-        }];
+[self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
+   NSLog(@"response: %@", response);
+} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+   NSLog(@"error: %@", [error description]);
+}];
 ```
 
 ### Sample response
