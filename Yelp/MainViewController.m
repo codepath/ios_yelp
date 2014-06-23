@@ -48,6 +48,51 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 90;
     
+    // set background color for nav bar
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.80 green:0.11 blue:0.09 alpha:1.0]];
+//    [[UINavigationBar appearance] setTranslucent:NO]; // this did not work and instead crashed app, see http://stackoverflow.com/questions/19125468/why-does-uinavigationbar-appearance-settranslucentno-crash-my-app
+    [self.navigationController.navigationBar setTranslucent:NO];
+    
+    // search bar
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    self.navigationItem.titleView = searchBar;
+    
+    // set text color for nav bar
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:1.0 green:0.93 blue:0.87 alpha:1.0]];
+    
+    UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    filterButton.layer.masksToBounds = NO;
+    filterButton.frame = CGRectMake(0, 0, 60, 30);
+    filterButton.layer.cornerRadius = 8.0;
+    filterButton.layer.borderWidth = 2.0;
+    filterButton.layer.borderColor = [[UIColor colorWithRed:0.76 green:0.09 blue:0.07 alpha:1.0] CGColor];
+    
+    // button shadow
+//    filterButton.layer.shadowColor = [[UIColor blackColor] CGColor];
+//    filterButton.layer.shadowOffset = CGSizeMake(2.0, 2.0);
+//    filterButton.layer.shadowRadius = 1.0;
+//    filterButton.layer.shadowOpacity = 0.2;
+//    filterButton.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:filterButton.layer.bounds cornerRadius:8.0].CGPath;
+    
+    // button gradient
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = filterButton.layer.bounds;
+    gradientLayer.cornerRadius = 8.0;
+    gradientLayer.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:0.89 green:0.22 blue:0.16 alpha:1.0] CGColor],
+                            (id)[[UIColor colorWithRed:0.78 green:0.12 blue:0.11 alpha:1.0] CGColor],
+                            nil];
+    [filterButton.layer insertSublayer:gradientLayer atIndex:0];
+    
+    filterButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
+    [filterButton setTitle:@"Filter" forState:UIControlStateNormal];
+    
+    UIBarButtonItem *filterButtonItem = [[UIBarButtonItem alloc] initWithCustomView:filterButton];
+    self.navigationItem.leftBarButtonItem = filterButtonItem;
+    
+    // an invisible/empty button as space holder so the search bar is of the right size
+    UIBarButtonItem *invisibleButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"        " style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.rightBarButtonItem = invisibleButtonItem;
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"BusinessTableViewCell" bundle:nil] forCellReuseIdentifier:@"BusinessTableViewCell"];
     
     [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
@@ -133,6 +178,11 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     // cost
     
     return cell;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 
 @end
