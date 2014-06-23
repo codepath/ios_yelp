@@ -55,6 +55,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     // search bar
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    searchBar.delegate = self;
     self.navigationItem.titleView = searchBar;
     
     // set text color for nav bar
@@ -95,7 +96,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"BusinessTableViewCell" bundle:nil] forCellReuseIdentifier:@"BusinessTableViewCell"];
     
-    [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
+    NSString *defaultSearchTerm = @"Chinese";
+    [self.client searchWithTerm:defaultSearchTerm success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"response: %@", response);
         self.businesses = response[@"businesses"];
         [self.tableView reloadData];
@@ -110,6 +112,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark UITableViewDelegate methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -183,6 +187,40 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
+}
+
+#pragma mark UISearchBarDelegate methods
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    NSLog(@"search item: %@", searchBar.text);
+    
+    // hide keyboard
+    [searchBar resignFirstResponder];
+    
+    [self.client searchWithTerm:searchBar.text success:^(AFHTTPRequestOperation *operation, id response) {
+        NSLog(@"response: %@", response);
+        self.businesses = response[@"businesses"];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [error description]);
+    }];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    NSLog(@"search item ====> %@", searchBar.text);
+    
+    // hide keyboard
+    [searchBar resignFirstResponder];
+    
+    [self.client searchWithTerm:searchBar.text success:^(AFHTTPRequestOperation *operation, id response) {
+        NSLog(@"response: %@", response);
+        self.businesses = response[@"businesses"];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [error description]);
+    }];
 }
 
 @end

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3F4CD4401955185A0087D440 /* BusinessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F4CD43E1955185A0087D440 /* BusinessTableViewCell.m */; };
 		3F4CD4411955185A0087D440 /* BusinessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F4CD43F1955185A0087D440 /* BusinessTableViewCell.xib */; };
+		3F4CD44619589F720087D440 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F4CD44419589F720087D440 /* FilterViewController.m */; };
+		3F4CD44719589F720087D440 /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F4CD44519589F720087D440 /* FilterViewController.xib */; };
 		420474F618DC299500E88E07 /* YelpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F518DC299500E88E07 /* YelpClient.m */; };
 		420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F918DC2B2100E88E07 /* MainViewController.m */; };
 		420474FC18DC2B2100E88E07 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 420474FA18DC2B2100E88E07 /* MainViewController.xib */; };
@@ -41,6 +43,9 @@
 		3F4CD43D1955185A0087D440 /* BusinessTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessTableViewCell.h; path = ../BusinessTableViewCell.h; sourceTree = "<group>"; };
 		3F4CD43E1955185A0087D440 /* BusinessTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessTableViewCell.m; path = ../BusinessTableViewCell.m; sourceTree = "<group>"; };
 		3F4CD43F1955185A0087D440 /* BusinessTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BusinessTableViewCell.xib; path = ../BusinessTableViewCell.xib; sourceTree = "<group>"; };
+		3F4CD44319589F720087D440 /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
+		3F4CD44419589F720087D440 /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
+		3F4CD44519589F720087D440 /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
 		420474F418DC299500E88E07 /* YelpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpClient.h; sourceTree = "<group>"; };
 		420474F518DC299500E88E07 /* YelpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YelpClient.m; sourceTree = "<group>"; };
 		420474F818DC2B2100E88E07 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -116,6 +121,9 @@
 				420474F818DC2B2100E88E07 /* MainViewController.h */,
 				420474F918DC2B2100E88E07 /* MainViewController.m */,
 				420474FA18DC2B2100E88E07 /* MainViewController.xib */,
+				3F4CD44319589F720087D440 /* FilterViewController.h */,
+				3F4CD44419589F720087D440 /* FilterViewController.m */,
+				3F4CD44519589F720087D440 /* FilterViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -272,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F4CD44719589F720087D440 /* FilterViewController.xib in Resources */,
 				42FD6C5518DC286B000BF2B9 /* InfoPlist.strings in Resources */,
 				3F4CD4411955185A0087D440 /* BusinessTableViewCell.xib in Resources */,
 				420474FC18DC2B2100E88E07 /* MainViewController.xib in Resources */,
@@ -331,6 +340,7 @@
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
 				3F4CD4401955185A0087D440 /* BusinessTableViewCell.m in Sources */,
+				3F4CD44619589F720087D440 /* FilterViewController.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
