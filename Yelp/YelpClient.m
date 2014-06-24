@@ -23,9 +23,17 @@
 - (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
     // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
-    NSDictionary *parameters = @{@"term": term, @"location" : @"San Francisco"};
+    NSDictionary *parameters = @{@"term": term, @"ll" : @"37.788022,-122.399797"};
     
     return [self GET:@"search" parameters:parameters success:success failure:failure];
+}
+
+
+- (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term Parameters:(NSDictionary *)params success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
+        
+    return [self GET:@"search" parameters:params success:success failure:failure];
 }
 
 @end

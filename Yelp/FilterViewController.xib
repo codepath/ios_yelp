@@ -4,9 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterViewController">
             <connections>
-                <outlet property="restaurantTableView" destination="sQq-DX-e6d" id="GAy-MK-cJd"/>
+                <outlet property="filterTableView" destination="MoQ-Tc-Hkd" id="YC3-pw-fyw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,18 +15,18 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sQq-DX-e6d">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MoQ-Tc-Hkd">
+                    <rect key="frame" x="0.0" y="0.0" width="313" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="sQq-DX-e6d" secondAttribute="trailing" id="ZOE-ML-vPG"/>
-                <constraint firstAttribute="bottom" secondItem="sQq-DX-e6d" secondAttribute="bottom" id="aHB-4N-uWV"/>
-                <constraint firstItem="sQq-DX-e6d" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="goG-fD-wHN"/>
-                <constraint firstItem="sQq-DX-e6d" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hBa-XF-7fb"/>
+                <constraint firstAttribute="bottom" secondItem="MoQ-Tc-Hkd" secondAttribute="bottom" id="6WP-eY-jEt"/>
+                <constraint firstItem="MoQ-Tc-Hkd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Ers-mD-7bb"/>
+                <constraint firstAttribute="trailing" secondItem="MoQ-Tc-Hkd" secondAttribute="trailing" constant="7" id="Oml-ls-6xc"/>
+                <constraint firstItem="MoQ-Tc-Hkd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dfv-Tf-nJt"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
