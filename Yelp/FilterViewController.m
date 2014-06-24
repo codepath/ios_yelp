@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSArray *sortKeys;
 @property (strong, nonatomic) NSArray *radiusKeys;
 @property (strong, nonatomic) NSArray *dealKeys;
+@property (strong, nonatomic) NSMutableArray *collapseState;
 
 @end
 
@@ -37,7 +38,7 @@
     self.tableView.dataSource = self;
     
     //load keys
-    NSArray *categoryKeys = @[
+    self.categoryKeys = @[
   @{@"name": @"American (New)", @"value": @"newamerican"},
   @{@"name": @"American (Traditional)", @"value": @"tradamerican"},
   @{@"name": @"Argentine", @"value": @"argentine"},
@@ -85,16 +86,22 @@
   @{@"name": @"Vietnamese", @"value": @"vietnamese"}
   ];
     
-    self.sortKeys = @{@"name": @"best match",@"value": @"bestmatch"},
+    self.sortKeys = @[
+            @{@"name": @"best match",@"value": @"bestmatch"},
             @{@"name": @"distance", @"value": @"distance"},
-            @{@"name": @"highest rated", @"value": @"highestrated"};
-    self.radiusKeys = @{@"name":@"meters", @"value":@"meters"};
-    self.dealKeys = @{@"name":@"on", @"value":@"on"},
-                    @{@"name":@"off", @"value":@"off"};
+            @{@"name": @"highest rated", @"value": @"highestrated"}
+            ];
     
+    self.radiusKeys = @[
+            @{@"name":@"meters", @"value":@"meters"}
+            ];
     
+    self.dealKeys = @[
+            @{@"name":@"on", @"value":@"on"},
+            @{@"name":@"off", @"value":@"off"}
+            ];
     
-    // Do any additional setup after loading the view from its nib.
+    self.collapseState = [NSMutableArray arrayWithArray:@[@true, @false, @false, @false]];
 }
 
 
@@ -111,42 +118,59 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (self.collapseSectionIndex == section)
-        return 1;
+    
+    NSInteger rows;
+    if ([self.collapseState[section]  isEqual: @true])
+        rows = 1;
     else if (section == 0)
-        return self.categoryKeys.count;
+        rows = self.categoryKeys.count;
     else if (section ==1)
-        return self.sortKeys.count;
+        rows =  self.sortKeys.count;
     else if (section == 2)
-        return self.radiusKeys.count;
+        rows = self.radiusKeys.count;
     else if (section == 3)
-        return self.dealKeys.count;
+        rows = self.dealKeys.count;
     else
-        return 0;
+        rows = 0;
+    NSLog(@"numberOfRowsInSection Section: %d for rows: %d", section, rows);
+    return  rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    NSLog(@"section: %d, row: %d", indexPath.section, indexPath.row);
+    //NSLog(@"cellForRowAtIndexPath section: %d, row: %d", indexPath.section, indexPath.row);
     
-    if (indexPath.section == 0)
-        cell.textLabel.text = self.categoryKeys[indexPath.row];
-    else if (indexPath.section == 1)
-        cell.textLabel.text = self.sortKeys[indexPath.row];
+    //NSLog(@"got cell text %@", self.categoryKeys[indexPath.row]);
+    //cell.textLabel.text = [NSString stringWithFormat:@"section: %d, row: %d", indexPath.section, indexPath.row];
+    
+    if (indexPath.section == 0) {
+        cell.textLabel.text = self.categoryKeys[indexPath.row][@"name"];
+    } else if (indexPath.section == 1)
+        cell.textLabel.text = self.sortKeys[indexPath.row][@"name"];
     else if (indexPath.section == 2)
-        cell.textLabel.text = self.radiusKeys[indexPath.row];
+        cell.textLabel.text = self.radiusKeys[indexPath.row][@"name"];
     else if (indexPath.section == 3)
-        cell.textLabel.text = self.dealKeys[indexPath.row];
+        cell.textLabel.text = self.dealKeys[indexPath.row][@"name"];
     
     return cell;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    //NSLog(@"viewForHeaderInSection section %d",section);
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 24)];
     
-    headerView.backgroundColor = [UIColor colorWithRed:(arc4random() % 256)/255.0 green:(arc4random() % 256)/255.0 blue:(arc4random() % 256)/255.0 alpha:1];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 24)];
+    label.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:14];
+    
+    [headerView addSubview:label];
+    
+
+    
+    //headerView.backgroundColor = [UIColor colorWithRed:(arc4random() % 256)/255.0 green:(arc4random() % 256)/255.0 blue:(arc4random() % 256)/255.0 alpha:1];
     
     return headerView;
 }
@@ -154,33 +178,43 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // The header for the section is the region name -- get this from the region at the section index.
     
-    NSLog(@"in title for header in section %d",section);
-    if (section == 1)
+    //NSLog(@"titleForHeaderInSection section %d",section);
+    if (section == 0)
         return @"Categories";
-    else if (section == 2)
+    else if (section == 1)
         return @"Sort By";
-    else if (section == 3)
+    else if (section == 2)
         return @"Radius";
-    else if (section == 4)
+    else if (section == 3)
         return @"Deals";
     return @"Section";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return self.categoryKeys.count;
+    return 24;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    int previousCollapseSectionIndex = self.collapseSectionIndex;
-    self.collapseSectionIndex = indexPath.section;
+    //int previousCollapseSectionIndex = self.collapseSectionIndex;
+    //self.collapseSectionIndex = indexPath.section;
+    if ([self.collapseState[indexPath.section]  isEqual: @true])
+        self.collapseState[indexPath.section] = @false;
+    else
+        self.collapseState[indexPath.section] = @true;
     
-    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSetWithIndex:previousCollapseSectionIndex];
+    //NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSetWithIndex:previousCollapseSectionIndex];
+    //[indexSet addIndex:self.collapseSectionIndex];
     
-    [indexSet addIndex:self.collapseSectionIndex];
-    [tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-   // [tableView reloadData];
+    //[tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+   [tableView reloadData];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone;
 }
 
 @end

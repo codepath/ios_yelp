@@ -10,6 +10,7 @@
 #import "YelpClient.h"
 #import "ReviewCell.h"
 #import "FilterViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 NSString * const kYelpConsumerKey = @"SxgSKMU2aA4RTt8wv6b8JQ";
 NSString * const kYelpConsumerSecret = @"kMCWuKvORR0J4B-_Fpqf0dnxRmY";
@@ -70,6 +71,7 @@ NSString * const kYelpTokenSecret = @"LQs24GHFrXeVlqoGG2Ba1vhOPdE";
     
     //search bar in navbar
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+    searchBar.delegate = self;
     self.navigationItem.titleView = searchBar;
     
     //[self.tableView reloadData];
@@ -115,17 +117,17 @@ NSString * const kYelpTokenSecret = @"LQs24GHFrXeVlqoGG2Ba1vhOPdE";
     NSURL *url = [NSURL URLWithString:imageUrl];
     
     //[cell.posterView setImageWithURL:url];
-    UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:url]];
+    //UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:url]];
     
-    [cell.posterView setImage:image];
+    [cell.posterView setImageWithURL:url];
     
     NSString *ratingUrl = review[@"rating_img_url"];
     NSURL *rurl = [NSURL URLWithString:ratingUrl];
     
     //[cell.posterView setImageWithURL:url];
-    UIImage *rimage = [UIImage imageWithData: [NSData dataWithContentsOfURL:rurl]];
+    //UIImage *rimage = [UIImage imageWithData: [NSData dataWithContentsOfURL:rurl]];
     
-    [cell.ratingStarView setImage:rimage];
+    [cell.ratingStarView setImageWithURL:rurl];
     
     return cell;
 }
