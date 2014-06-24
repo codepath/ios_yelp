@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface DealTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UISwitch *dealSwitch;
 
+- (IBAction)dealSwitchChanged:(id)sender;
 @end

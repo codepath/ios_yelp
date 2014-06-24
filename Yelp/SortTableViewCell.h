@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SortTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *sortLabel;
 
 @end
