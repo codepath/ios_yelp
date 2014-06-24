@@ -18,6 +18,10 @@ Filter page
 * Categories should show a subset of the full list with a "See All" row to expand.
 * Clicking on the "Search" button should dismiss the filters page and trigger the search w/ the new filter settings.
 
+### Walkthrough
+---------------------
+![Vertical Walkthrough](yelp.gif)
+![Horizontal Walkthrough](yelp_horizontal.gif)
 
 
 
