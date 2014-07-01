@@ -20,3 +20,4 @@ Time spent = 15 hrs
   * [ ] Optional: Implement the restaurant detail page.
 
 ## Walkthrough
+![demo](Yelp.gif)
