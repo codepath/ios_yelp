@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "FilterViewController.h"
 
-@interface MainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate, UISearchBarDelegate>
+@interface MainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate, UISearchBarDelegate, FilterViewControllerDelegate>
 
 @end

@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "YelpClient.h"
 #import "YelpTableViewCell.h"
+#import "FilterViewController.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
@@ -38,7 +39,9 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
                                                                 @"category_filter" : @"restaurants",
                                                                 @"deals_filter" : @"0",
                                                                 @"sort" : @"1",
+                                                                @"radius_filter": @"10000"
                                                             }];
+        self.searchTerm = @"";
     }
     return self;
 }
@@ -74,7 +77,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [self.navigationItem.titleView setTintColor:[UIColor whiteColor]];
     
     //Filter
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStyleBordered target:self action:nil];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStyleBordered target:self action:@selector(filterView)];
     [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
 }
 
@@ -130,5 +133,17 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [self.searchDisplayController setActive:NO];
     [searchBar resignFirstResponder];
 }
+
+-(void)filterView {
+    FilterViewController *fvc = [[FilterViewController alloc] initWithNibName:@"FilterViewController" bundle:nil];
+    fvc.selectedValues = self.filterParams;
+    fvc.delegate = self;
+    [self.navigationController pushViewController:fvc animated:YES];
+}
+
+-(void) propagateFilters:(FilterViewController *)controller {
+    [self fetchResults:self.searchTerm];
+}
+
 
 @end
