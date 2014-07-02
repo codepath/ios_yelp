@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FilterViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface FilterViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @end

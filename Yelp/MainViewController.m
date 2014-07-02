@@ -87,6 +87,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     filterButton.titleLabel.font = [UIFont boldSystemFontOfSize:13];
     [filterButton setTitle:@"Filter" forState:UIControlStateNormal];
     
+    [filterButton addTarget:self action:@selector(showFilterView) forControlEvents:UIControlEventTouchDown];
+    
     UIBarButtonItem *filterButtonItem = [[UIBarButtonItem alloc] initWithCustomView:filterButton];
     self.navigationItem.leftBarButtonItem = filterButtonItem;
     
@@ -104,6 +106,11 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
     }];
+    
+}
+
+- (void)showFilterView{
+    NSLog(@"showing filter view");
     
 }
 
@@ -125,6 +132,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     NSLog(@"section=%d, row=%d", indexPath.section, indexPath.row);
     
     BusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessTableViewCell"];
+    
+    if (cell == nil) {
+        cell = [[BusinessTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BusinessTableViewCell"];
+    }
     
     NSDictionary *business = self.businesses[indexPath.row];
     
