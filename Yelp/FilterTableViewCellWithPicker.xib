@@ -24,7 +24,7 @@
                         <rect key="frame" x="180" y="7" width="128" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad" enablesReturnKeyAutomatically="YES"/>
                     </textField>
                 </subviews>
             </tableViewCellContentView>

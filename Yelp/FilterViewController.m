@@ -20,6 +20,8 @@
 @property (strong, nonatomic) NSString *deals;
 @property (strong, nonatomic) NSMutableDictionary *catetory;
 
+@property BOOL categorySectionCollapsed;
+
 @end
 
 @implementation FilterViewController
@@ -37,6 +39,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.categorySectionCollapsed = YES; // category section initially collapsed
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -145,9 +149,16 @@
       @{@"name": @"Vietnamese", @"value": @"vietnamese"}
       ];
     
-    NSLog(@"view did load done");
-    
     [self.tableView reloadData];
+    
+    NSLog(@"vidDidLoad done");
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView collapsableSection:(NSInteger)section
+{
+    // only category section is collapsable
+    return (section == 3) ? YES : NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -180,7 +191,15 @@
             break;
             
         case 3:
-            return [self.categoryDefs count];
+            if (self.categorySectionCollapsed)
+            {
+                NSLog(@"category section collapsed, showing 4 rows");
+                return 4; // 3 normal rows and 1 "See All" row
+            } else {
+                NSLog(@"category section expanded, showing all rows");
+                return [self.categoryDefs count] + 1;
+            }
+            
             break;
             
         default:
@@ -261,6 +280,26 @@
     } else if (indexPath.section == 3) {
         // category
         
+        // see all row
+        int totalRows = [self tableView:tableView numberOfRowsInSection:indexPath.section];
+        if (indexPath.row == totalRows - 1) {
+            
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+            
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
+            }
+            
+            if (self.categorySectionCollapsed) {
+                cell.textLabel.text = @"See All";
+            } else {
+                cell.textLabel.text = @"See Some";
+            }
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            return cell;
+        }
+        
+        // other normal category rows
         FilterTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FilterTableViewCell"];
         
         if (cell == nil) {
@@ -279,6 +318,51 @@
     
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // skip other sections except category
+    if (indexPath.section != 3) {
+        return;
+    }
+    
+    // see all row
+    int totalRows = [self tableView:tableView numberOfRowsInSection:indexPath.section];
+    
+    // skip other rows except See All row
+    if (indexPath.row != totalRows - 1) {
+        return;
+    }
+    
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    if (self.categorySectionCollapsed) {
+        for (int i = 4; i < totalRows - 1; i++)
+        {
+            NSIndexPath *tmpIndexPath = [NSIndexPath indexPathForRow:i inSection:indexPath.section];
+            [indexPaths addObject:tmpIndexPath];
+        }
+        [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationMiddle];
+        cell.textLabel.text = @"Show Less";
+        self.categorySectionCollapsed = NO;
+        NSLog(@"category section expanded");
+        
+    } else {
+        self.categorySectionCollapsed = YES;
+        for (int i = 3; i < totalRows - 1; i++)
+        {
+            NSIndexPath *tmpIndexPath = [NSIndexPath indexPathForRow:i inSection:indexPath.section];
+            [indexPaths addObject:tmpIndexPath];
+        }
+        [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationMiddle];
+        cell.textLabel.text = @"Show All";
+        NSLog(@"category section collapsed");
+    }
+    
+    [tableView reloadData];
 }
 
 // restore values from NSUserDefaults
