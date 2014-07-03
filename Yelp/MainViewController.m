@@ -10,6 +10,7 @@
 #import "YelpClient.h"
 #import "BusinessTableViewCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "FilterViewController.h"
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
 NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
@@ -23,6 +24,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (nonatomic, strong) YelpClient *client;
 
 @property (nonatomic, strong) NSArray *businesses;
+
+@property (nonatomic, strong) NSString *term;
 
 @end
 
@@ -50,7 +53,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     // set background color for nav bar
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.80 green:0.11 blue:0.09 alpha:1.0]];
-//    [[UINavigationBar appearance] setTranslucent:NO]; // this did not work and instead crashed app, see http://stackoverflow.com/questions/19125468/why-does-uinavigationbar-appearance-settranslucentno-crash-my-app
+    // this did not work and instead crashed app, see http://stackoverflow.com/questions/19125468/why-does-uinavigationbar-appearance-settranslucentno-crash-my-app
+//    [[UINavigationBar appearance] setTranslucent:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
     
     // search bar
@@ -98,20 +102,29 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"BusinessTableViewCell" bundle:nil] forCellReuseIdentifier:@"BusinessTableViewCell"];
     
-    NSString *defaultSearchTerm = @"Chinese";
-    [self.client searchWithTerm:defaultSearchTerm success:^(AFHTTPRequestOperation *operation, id response) {
-        NSLog(@"response: %@", response);
-        self.businesses = response[@"businesses"];
-        [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error: %@", [error description]);
-    }];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.term = [defaults objectForKey:@"term"];
+    if (!self.term) {
+        self.term = @"thai";
+    }
+    searchBar.text = self.term;
+    [self doSearch:self.term];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.term = [defaults objectForKey:@"term"];
+    if (!self.term) {
+        self.term = @"thai";
+    }
+    [self doSearch:self.term];
 }
 
 - (void)showFilterView{
     NSLog(@"showing filter view");
-    
+    FilterViewController *fvc = [[FilterViewController alloc] initWithNibName:@"FilterViewController" bundle:nil];
+    [self.navigationController pushViewController:fvc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -129,7 +142,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"section=%d, row=%d", indexPath.section, indexPath.row);
+//    NSLog(@"section=%d, row=%d", indexPath.section, indexPath.row);
     
     BusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessTableViewCell"];
     
@@ -201,31 +214,64 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    NSLog(@"search item: %@", searchBar.text);
-    
     // hide keyboard
     [searchBar resignFirstResponder];
     
-    [self.client searchWithTerm:searchBar.text success:^(AFHTTPRequestOperation *operation, id response) {
-        NSLog(@"response: %@", response);
-        self.businesses = response[@"businesses"];
-        [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error: %@", [error description]);
-    }];
+    [self doSearch:searchBar.text];
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-    NSLog(@"search item ====> %@", searchBar.text);
-    
     // hide keyboard
     [searchBar resignFirstResponder];
     
-    [self.client searchWithTerm:searchBar.text success:^(AFHTTPRequestOperation *operation, id response) {
+    [self doSearch:searchBar.text];
+}
+
+- (void)doSearch:(NSString *)term
+{
+    NSLog(@"search term: %@", term);
+    
+    // get filters from saved settings
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *filters = [[NSMutableDictionary alloc] init];
+    
+    NSString *radius = [defaults objectForKey:@"radius"];
+    if (radius) {
+        [filters setObject:radius forKey:@"radius"];
+        NSLog(@"setting radius filter in search to %@", radius);
+    }
+    
+    NSString *sort = [defaults objectForKey:@"sort"];
+    if (sort) {
+        [filters setObject:sort forKey:@"sort"];
+        NSLog(@"setting sort filter in search to %@", sort);
+    }
+    
+    NSString *deals = [defaults objectForKey:@"deals"];
+    if (deals) {
+        [filters setObject:deals forKey:@"deals"];
+        NSLog(@"setting deals filter in search to %@", deals);
+    }
+    
+    NSMutableDictionary *category = [defaults objectForKey:@"category"];
+    if (category) {
+        [filters setObject:category forKey:@"category"];
+        NSLog(@"setting category filter in search to %@", category);
+    }
+    
+    NSLog(@"filters set for search: %@", filters);
+    
+    [self.client searchWithTerm:term withFilters:filters success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"response: %@", response);
         self.businesses = response[@"businesses"];
         [self.tableView reloadData];
+        
+        // save the search term to NSUserDefaults
+        [defaults setObject:term forKey:@"term"];
+        [defaults synchronize];
+        NSLog(@"search term %@ saved to NSUserDefaults", term);
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
     }];

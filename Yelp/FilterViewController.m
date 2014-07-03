@@ -220,7 +220,7 @@
             cell = [[FilterTableViewCellWithPicker alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FilterTableViewCellWithPicker"];
         }
         
-        cell.label.text = @"Radius (mi)";
+        cell.label.text = @"Radius (meters)";
         cell.value.text = self.radius;
         cell.value.tag = 0;
         cell.value.delegate = self;
@@ -306,6 +306,7 @@
     NSLog(@"filters restored from user defaults");
 }
 
+// handle UISwitch events
 - (void)setSwitch:(UISwitch *)sender
 {
     if (sender){
@@ -344,13 +345,14 @@
     [defaults setObject:self.catetory forKey:@"category"];
     [defaults synchronize];
     NSLog(@"user defaults saved");
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark UITextFieldDelegate methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSLog(@"text field value in should return: %@", textField.text);
     [textField resignFirstResponder];
     return YES;
 }
