@@ -8,17 +8,25 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "FilterViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // change status bar style, so we get white colored text
+    [application setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [[MainViewController alloc] init];
+//    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:[[FilterViewController alloc] init]];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+    self.window.rootViewController = nc;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
