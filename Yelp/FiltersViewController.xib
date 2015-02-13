@@ -5,9 +5,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FiltersViewController">
             <connections>
-                <outlet property="tableView" destination="3rG-iJ-Esz" id="cMv-Se-DVb"/>
+                <outlet property="tableView" destination="EmW-bs-Sfh" id="DsL-yv-dfw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,19 +16,19 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3rG-iJ-Esz">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EmW-bs-Sfh">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="3rG-iJ-Esz" secondAttribute="bottom" id="A6I-L5-2Mj"/>
-                <constraint firstItem="3rG-iJ-Esz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Ah5-la-nxU"/>
-                <constraint firstItem="3rG-iJ-Esz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bJW-fA-Z62"/>
-                <constraint firstAttribute="trailing" secondItem="3rG-iJ-Esz" secondAttribute="trailing" id="sSm-o0-naC"/>
+                <constraint firstAttribute="trailing" secondItem="EmW-bs-Sfh" secondAttribute="trailing" id="91M-cr-aW1"/>
+                <constraint firstItem="EmW-bs-Sfh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="B4f-Ie-zoc"/>
+                <constraint firstAttribute="bottom" secondItem="EmW-bs-Sfh" secondAttribute="bottom" id="C0e-Sh-wbv"/>
+                <constraint firstItem="EmW-bs-Sfh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="FVn-M7-V0T"/>
             </constraints>
+            <point key="canvasLocation" x="139" y="154"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
