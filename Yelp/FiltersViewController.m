@@ -10,10 +10,10 @@
 #import "SwitchCell.h"
 #import "SliderCell.h"
 
-int const CATEGORIES_SECTION_INDEX = 0;
-int const DEALS_SECTION_INDEX = 1;
+int const CATEGORIES_SECTION_INDEX = 3;
+int const DEALS_SECTION_INDEX = 0;
 int const SORT_SECTION_INDEX = 2;
-int const RADIUS_SECTION_INDEX = 3;
+int const RADIUS_SECTION_INDEX = 1;
 
 
 @interface FiltersViewController () <UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate, SliderCellDelegate>
@@ -46,17 +46,21 @@ int const RADIUS_SECTION_INDEX = 3;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    // configure table view
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 86;
     [self.tableView registerNib:[UINib nibWithNibName:@"SwitchCell" bundle:nil] forCellReuseIdentifier:@"SwitchCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SliderCell" bundle:nil] forCellReuseIdentifier:@"SliderCell"];
     
+    // configure navigation bar
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onCancelButton)];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Apply" style:UIBarButtonItemStylePlain target:self action:@selector(onApplyButton)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Apply" style:UIBarButtonItemStyleDone target:self action:@selector(onApplyButton)];
     
+    // populate controls from storage
     [self populateControlsFromStorage];
 }
 

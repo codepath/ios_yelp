@@ -11,6 +11,7 @@
 #import "Business.h"
 #import "BusinessCell.h"
 #import "FiltersViewController.h"
+#import "SVProgressHUD.h"
 
 NSString * const kYelpConsumerKey = @"UgcPymh8Mrzi96l3sxyr-w";
 NSString * const kYelpConsumerSecret = @"vuYqZdxZiiYXqkOc7hYChJJ1s-8";
@@ -58,7 +59,7 @@ UIColor *yelpColor;
     [self.tableView registerNib:[UINib nibWithNibName:@"BusinessCell" bundle:nil] forCellReuseIdentifier:@"BusinessCell"];
 
     // navigation bar
-    self.navigationController.navigationBar.barTintColor = yelpColor;
+    //self.navigationController.navigationBar.barTintColor = yelpColor;
     
     // filter button
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filters" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
@@ -68,6 +69,10 @@ UIColor *yelpColor;
     searchBar.delegate = self;
     self.navigationItem.titleView = searchBar;
     self.searchTerm = searchBar.text = defaultSearchTerm;
+    
+    // progress hud
+    [SVProgressHUD setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5]];
+    [SVProgressHUD setForegroundColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:0.9]];
     
     // fetch some data
     [self fetchBusinesses];
@@ -120,6 +125,7 @@ UIColor *yelpColor;
 }
 
 -(void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params {
+    [SVProgressHUD show];
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
         //NSLog(@"response: %@", response);
         
@@ -128,9 +134,13 @@ UIColor *yelpColor;
         self.businesses = [Business businessesWithDictionaries:businessesDictionaries];
         
         [self.tableView reloadData];
+
+        [SVProgressHUD dismiss];
+
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //NSLog(@"error: %@", [error description]);
+        [SVProgressHUD dismiss];
     }];
 }
 
