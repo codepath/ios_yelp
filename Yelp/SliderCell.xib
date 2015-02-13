@@ -14,20 +14,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="1" maxValue="25" translatesAutoresizingMaskIntoConstraints="NO" id="Qz0-mI-Gus">
-                        <rect key="frame" x="106" y="8" width="208" height="32"/>
-                        <color key="minimumTrackTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="maximumTrackTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <connections>
-                            <action selector="onValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="TpD-N4-i0B"/>
-                        </connections>
-                    </slider>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25 miles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faa-dW-eil">
                         <rect key="frame" x="8" y="13" width="64" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="1" maxValue="25" translatesAutoresizingMaskIntoConstraints="NO" id="Qz0-mI-Gus">
+                        <rect key="frame" x="106" y="8" width="208" height="32"/>
+                        <connections>
+                            <action selector="onValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="TpD-N4-i0B"/>
+                        </connections>
+                    </slider>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Qz0-mI-Gus" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="8xk-19-rD9"/>

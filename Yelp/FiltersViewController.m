@@ -21,6 +21,7 @@ int const RADIUS_SECTION_INDEX = 3;
 @property (nonatomic, readonly) NSDictionary *filters;
 @property (nonatomic, strong) NSArray *categories;
 @property (nonatomic, strong) NSArray *sorts;
+
 @property (nonatomic, strong) NSMutableSet *selectedCategories;
 @property (nonatomic, assign) BOOL dealsOnly;
 @property (nonatomic, assign) NSString *sortBy;
@@ -41,7 +42,6 @@ int const RADIUS_SECTION_INDEX = 3;
     }
     
     return self;
-    
 }
 
 - (void)viewDidLoad {
@@ -57,8 +57,7 @@ int const RADIUS_SECTION_INDEX = 3;
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Apply" style:UIBarButtonItemStylePlain target:self action:@selector(onApplyButton)];
     
-    self.radius = 1;
-
+    [self populateControlsFromStorage];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -112,14 +111,14 @@ int const RADIUS_SECTION_INDEX = 3;
         cell.delegate = self;
         return cell;
         
-    } else if (indexPath.section == SORT_SECTION_INDEX) {
+    } else if (indexPath.section == SORT_SECTION_INDEX) { // sort by
         SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
         cell.titleLabel.text = self.sorts[indexPath.row][@"label"];
-        [cell setOn:(self.sortBy == self.sorts[indexPath.row][@"code"])];
+        [cell setOn:[self.sortBy isEqualToString:self.sorts[indexPath.row][@"code"]]];
         cell.delegate = self;
         return cell;
         
-    } else if (indexPath.section == RADIUS_SECTION_INDEX) {
+    } else if (indexPath.section == RADIUS_SECTION_INDEX) { // radius
         SliderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SliderCell"];
         [cell setSliderValue:self.radius];
         cell.delegate = self;
@@ -198,6 +197,7 @@ int const RADIUS_SECTION_INDEX = 3;
 }
 
 -(void)onApplyButton {
+    [self saveControlsToStorage];
     [self.delegate filtersViewController:self didChangeFilters:self.filters];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -212,9 +212,42 @@ int const RADIUS_SECTION_INDEX = 3;
     }
 }
 
+-(void)populateControlsFromStorage {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    
+    BOOL savedControlDataExists = [defaults boolForKey:@"savedControlDataExists"];
+    if (savedControlDataExists) {
+        self.radius = [defaults floatForKey:@"radius"];
+        self.dealsOnly = [defaults boolForKey:@"dealsOnly"];
+        self.sortBy = [defaults objectForKey:@"sortBy"];
+        self.selectedCategories = [NSMutableSet setWithSet:[self convertArrayToSet:[defaults objectForKey:@"selectedCategories"]]];
+    } else {
+        self.radius = 5;
+        self.dealsOnly = NO;
+        self.sortBy = @"0";
+    }
+}
+
+-(void)saveControlsToStorage {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:YES forKey:@"savedControlDataExists"];
+    [defaults setFloat:self.radius forKey:@"radius"];
+    [defaults setBool:self.dealsOnly forKey:@"dealsOnly"];
+    [defaults setObject:self.sortBy forKey:@"sortBy"];
+    [defaults setObject:[self convertSetToArray:self.selectedCategories] forKey:@"selectedCategories"];
+}
+
+-(NSSet *)convertArrayToSet:(NSArray *)array {
+    return [NSSet setWithArray:array];
+}
+
+-(NSArray *)convertSetToArray:(NSSet *)set {
+    return [set allObjects];
+}
+
 -(void)initSorts {
     self.sorts =
-    @[@{@"label" : @"Best matched", @"code" : @"0"},
+    @[@{@"label" : @"Best Matched", @"code" : @"0"},
       @{@"label" : @"Distance", @"code" : @"1"},
       @{@"label" : @"Highest Rated", @"code" : @"2"}];
 }
