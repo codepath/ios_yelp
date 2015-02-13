@@ -28,9 +28,7 @@
 }
 
 - (IBAction)switchValueChanged:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(switchCell:didUpdateValue:)]) {
-        [self.delegate switchCell:self didUpdateValue:self.toggleSwitch.on];
-    }
+    [self.delegate switchCell:self didUpdateValue:self.toggleSwitch.on];
 }
 
 - (void)setOn:(BOOL)on animated:(BOOL)animated {

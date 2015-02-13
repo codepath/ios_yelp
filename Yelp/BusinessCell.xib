@@ -22,7 +22,7 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xI7-vk-9Ee">
-                        <rect key="frame" x="86" y="27" width="84" height="17"/>
+                        <rect key="frame" x="86" y="28" width="84" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="84" id="Hb2-Jm-Gbh"/>
                             <constraint firstAttribute="height" constant="17" id="rrn-W3-ZCT"/>
@@ -41,19 +41,19 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="469 Reviews" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AWm-7f-yYt">
-                        <rect key="frame" x="175" y="29" width="60" height="12"/>
+                        <rect key="frame" x="175" y="30" width="60" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88 Division St., Mission Bay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9h5-6G-h4I">
-                        <rect key="frame" x="86" y="49" width="131" height="12"/>
+                        <rect key="frame" x="86" y="50" width="242" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thai, Seafood, Salad" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nH2-Di-E7u">
-                        <rect key="frame" x="86" y="65" width="98" height="12"/>
+                        <rect key="frame" x="86" y="66" width="242" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -74,6 +74,7 @@
                     <constraint firstAttribute="trailing" secondItem="ih8-QJ-u3z" secondAttribute="trailing" constant="8" id="MEF-PJ-V9T"/>
                     <constraint firstItem="nH2-Di-E7u" firstAttribute="top" secondItem="9h5-6G-h4I" secondAttribute="bottom" constant="4" id="MKs-gU-IC3"/>
                     <constraint firstItem="AWm-7f-yYt" firstAttribute="centerY" secondItem="xI7-vk-9Ee" secondAttribute="centerY" id="Mu2-m4-WH6"/>
+                    <constraint firstAttribute="trailing" secondItem="nH2-Di-E7u" secondAttribute="trailing" constant="8" id="TUO-Kb-ZWb"/>
                     <constraint firstItem="AWm-7f-yYt" firstAttribute="leading" secondItem="xI7-vk-9Ee" secondAttribute="trailing" constant="5" id="VHH-Yi-dcr"/>
                     <constraint firstItem="tyq-mB-pbF" firstAttribute="leading" secondItem="9k3-Pd-2tW" secondAttribute="trailing" constant="8" id="bdn-Ju-GOf"/>
                     <constraint firstItem="xI7-vk-9Ee" firstAttribute="leading" secondItem="9k3-Pd-2tW" secondAttribute="trailing" constant="8" id="bfn-kN-vzP"/>
@@ -82,6 +83,7 @@
                     <constraint firstItem="xI7-vk-9Ee" firstAttribute="top" secondItem="tyq-mB-pbF" secondAttribute="bottom" constant="5" id="hZl-bb-m5d"/>
                     <constraint firstItem="9h5-6G-h4I" firstAttribute="leading" secondItem="9k3-Pd-2tW" secondAttribute="trailing" constant="8" id="j2e-5o-WrI"/>
                     <constraint firstItem="tyq-mB-pbF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="oih-a9-zmj"/>
+                    <constraint firstAttribute="trailing" secondItem="9h5-6G-h4I" secondAttribute="trailing" constant="8" id="p5y-QY-ZER"/>
                     <constraint firstItem="ih8-QJ-u3z" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="tns-bl-gG9"/>
                     <constraint firstItem="Psa-0c-hBt" firstAttribute="top" secondItem="ih8-QJ-u3z" secondAttribute="bottom" constant="8" id="uBd-K6-KYO"/>
                     <constraint firstItem="nH2-Di-E7u" firstAttribute="leading" secondItem="9k3-Pd-2tW" secondAttribute="trailing" constant="8" id="yfG-KL-xvO"/>
@@ -93,6 +95,7 @@
                 <outlet property="distanceLabel" destination="ih8-QJ-u3z" id="snc-Es-Emk"/>
                 <outlet property="nameLabel" destination="tyq-mB-pbF" id="DR1-Kq-Fse"/>
                 <outlet property="posterView" destination="9k3-Pd-2tW" id="U8e-aM-Qpv"/>
+                <outlet property="priceLabel" destination="Psa-0c-hBt" id="4D6-2N-UhF"/>
                 <outlet property="ratingImageView" destination="xI7-vk-9Ee" id="Dy5-hC-es9"/>
                 <outlet property="ratingLabel" destination="AWm-7f-yYt" id="nos-zn-nOQ"/>
             </connections>
