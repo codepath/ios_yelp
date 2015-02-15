@@ -31,9 +31,10 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // parallax
-    UIImageView *tempImageView = [[UIImageView alloc] init];
-    [tempImageView setImageWithURL:[NSURL URLWithString:self.business.imageUrl]];
-    [self.tableView addParallaxWithImage:tempImageView.image andHeight:200];
+    UIImageView *posterView = [[UIImageView alloc] init];
+    [posterView setImageWithURL:[NSURL URLWithString:self.business.imageUrl]];
+    [posterView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    [self.tableView addParallaxWithImage:posterView.image andHeight:150.];
     
     // navigation
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
