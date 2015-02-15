@@ -9,6 +9,8 @@
 #import "FiltersViewController.h"
 #import "SwitchCell.h"
 #import "SliderCell.h"
+#import "ShowMoreCell.h"
+#import "ExpansionCell.h"
 
 int const CATEGORIES_SECTION_INDEX = 3;
 int const DEALS_SECTION_INDEX = 0;
@@ -16,7 +18,7 @@ int const SORT_SECTION_INDEX = 2;
 int const RADIUS_SECTION_INDEX = 1;
 
 
-@interface FiltersViewController () <UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate, SliderCellDelegate>
+@interface FiltersViewController () <UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate, SliderCellDelegate, ShowMoreCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, readonly) NSDictionary *filters;
@@ -28,6 +30,12 @@ int const RADIUS_SECTION_INDEX = 1;
 @property (nonatomic, assign) BOOL dealsOnly;
 @property (nonatomic, assign) NSString *sortBy;
 @property (nonatomic, assign) float radius;
+
+@property (nonatomic, strong) NSPredicate* allCategories;
+@property (nonatomic, strong) NSPredicate* topCategories;
+@property (nonatomic, strong) NSPredicate* categoriesPredicate;
+
+@property (nonatomic, assign) BOOL sortByExpanded;
 
 @end
 
@@ -52,14 +60,34 @@ int const RADIUS_SECTION_INDEX = 1;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 48;
-    //self.tableView.estimatedRowHeight = 86;
     [self.tableView registerNib:[UINib nibWithNibName:@"SwitchCell" bundle:nil] forCellReuseIdentifier:@"SwitchCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SliderCell" bundle:nil] forCellReuseIdentifier:@"SliderCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ExpansionCell" bundle:nil] forCellReuseIdentifier:@"ExpansionCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ShowMoreCell" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ShowMoreCell"];
     
     // configure navigation bar
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onCancelButton)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"check"] style:UIBarButtonItemStylePlain target:self action:@selector(onApplyButton)];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Apply" style:UIBarButtonItemStyleDone target:self action:@selector(onApplyButton)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cancel"] style:UIBarButtonItemStylePlain target:self action:@selector(onCancelButton)];
+
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:196/255.0f green:18/255.0f blue:0/255.0f alpha:1.0f];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    self.title = @"Filters";
+
+    // category predicates
+    self.topCategories = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [evaluatedObject[@"top"] isEqualToString:@"yes"] || [self.selectedCategories containsObject:evaluatedObject];
+    }];
+    
+    self.allCategories = [NSPredicate predicateWithValue:YES];
+    self.categoriesPredicate = self.topCategories;
+    
+    // sortBy expansion state
+    self.sortByExpanded = NO;
     
     // populate controls from storage
     [self populateControlsFromStorage];
@@ -81,9 +109,9 @@ int const RADIUS_SECTION_INDEX = 1;
     } else if (section == DEALS_SECTION_INDEX) {
         return @"Deals";
     } else if (section == SORT_SECTION_INDEX) {
-        return @"Sort";
+        return @"Sort by";
     } else if (section == RADIUS_SECTION_INDEX) {
-        return @"Radius";
+        return @"Distance";
     }
     return @"";
 }
@@ -93,8 +121,10 @@ int const RADIUS_SECTION_INDEX = 1;
         return self.visibleCategories.count;
     } else if (section == DEALS_SECTION_INDEX) {
         return 1;
-    } else if (section == SORT_SECTION_INDEX) {
+    } else if (section == SORT_SECTION_INDEX && self.sortByExpanded == YES) {
         return 3;
+    } else if (section == SORT_SECTION_INDEX && self.sortByExpanded == NO) {
+        return 1;
     } else if (section == RADIUS_SECTION_INDEX) {
         return 1;
     }
@@ -104,6 +134,7 @@ int const RADIUS_SECTION_INDEX = 1;
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == CATEGORIES_SECTION_INDEX) { // categories
         SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.titleLabel.text = self.visibleCategories[indexPath.row][@"name"];
         [cell setOn:[self.selectedCategories containsObject:self.visibleCategories[indexPath.row]]];
         cell.delegate = self;
@@ -111,26 +142,66 @@ int const RADIUS_SECTION_INDEX = 1;
         
     } else if (indexPath.section == DEALS_SECTION_INDEX) { // deals
         SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
-        cell.titleLabel.text = @"Deals only";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.titleLabel.text = @"Deals Only";
         [cell setOn:self.dealsOnly];
         cell.delegate = self;
         return cell;
         
-    } else if (indexPath.section == SORT_SECTION_INDEX) { // sort by
+    } else if (indexPath.section == SORT_SECTION_INDEX && self.sortByExpanded == YES) { // sort by expanded
         SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.titleLabel.text = self.sorts[indexPath.row][@"label"];
         [cell setOn:[self.sortBy isEqualToString:self.sorts[indexPath.row][@"code"]]];
         cell.delegate = self;
         return cell;
+
+    } else if (indexPath.section == SORT_SECTION_INDEX && self.sortByExpanded == NO) { // sort by collapsed
+        ExpansionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ExpansionCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (self.sortBy == nil) {
+            cell.valueLabel.text = @"None";
+        } else {
+            cell.valueLabel.text = self.sorts[[self.sortBy intValue]][@"label"];
+        }
+        return cell;
         
     } else if (indexPath.section == RADIUS_SECTION_INDEX) { // radius
         SliderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SliderCell"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setSliderValue:self.radius];
         cell.delegate = self;
         return cell;
     }
 
     return nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == SORT_SECTION_INDEX && self.sortByExpanded == NO) { // sort by collapsed
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        self.sortByExpanded = YES;
+        
+        NSIndexSet *set = [NSIndexSet indexSetWithIndex: (NSUInteger)SORT_SECTION_INDEX];
+        [self.tableView reloadSections:set withRowAnimation:NO];
+    }
+}
+
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    if (section == CATEGORIES_SECTION_INDEX && self.topCategories == self.categoriesPredicate) {
+        ShowMoreCell *cell = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ShowMoreCell"];
+        cell.delegate = self;
+        return cell;
+    }
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == CATEGORIES_SECTION_INDEX) {
+        return 43.0;
+    }
+    return 0.;
 }
 
 #pragma mark - Switch cell delegate methods
@@ -155,6 +226,11 @@ int const RADIUS_SECTION_INDEX = 1;
         } else {
             self.sortBy = nil;
         }
+        
+        self.sortByExpanded = NO;
+        NSIndexSet *set = [NSIndexSet indexSetWithIndex: (NSUInteger)SORT_SECTION_INDEX];
+        [self.tableView reloadSections:set withRowAnimation:NO];
+
     }
 }
 
@@ -167,6 +243,20 @@ int const RADIUS_SECTION_INDEX = 1;
     if(indexPath.section == RADIUS_SECTION_INDEX && indexPath.row == 0) {
         self.radius = value;
     }
+}
+
+#pragma mark - Show More cell delegate methods
+
+-(void)showMoreInvoked:(ShowMoreCell *)showMoreCell {
+    self.categoriesPredicate = self.allCategories;
+    
+    NSIndexSet *set = [NSIndexSet indexSetWithIndex: (NSUInteger)CATEGORIES_SECTION_INDEX];
+    [self.tableView reloadSections:set withRowAnimation:NO];
+}
+
+#pragma mark - Sort Expansion cell delegate methods
+
+-(void)expansionCellInvoked:(ExpansionCell *)expansionCell {
 }
 
 #pragma mark - Private methods
@@ -251,7 +341,7 @@ int const RADIUS_SECTION_INDEX = 1;
 }
 
 -(NSArray *)visibleCategories {
-    return self.categories;
+    return [self.categories filteredArrayUsingPredicate:self.categoriesPredicate];
 }
 
 -(void)initSorts {

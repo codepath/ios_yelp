@@ -18,7 +18,6 @@ NSString * const kYelpConsumerSecret = @"vuYqZdxZiiYXqkOc7hYChJJ1s-8";
 NSString * const kYelpToken = @"P3AepoF3ap3ceU_p5L7ia04gJ0pNzYYL";
 NSString * const kYelpTokenSecret = @"rdIU15RaiP5N7zz-m-2YV4P1DHA";
 NSString * const defaultSearchTerm = @"Restaurants";
-UIColor *yelpColor;
 
 @interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate, UISearchBarDelegate>
 
@@ -27,12 +26,17 @@ UIColor *yelpColor;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSDictionary *filters;
 @property (nonatomic, strong) NSString* searchTerm;
+@property (nonatomic, assign) NSInteger totalCount;
+@property (nonatomic, assign) BOOL requestInFlight;
+@property (nonatomic, assign) NSInteger activeView; // 0 = list, 1 = map
 
 -(void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params;
 
 @end
 
 @implementation MainViewController
+
+int offset = 0;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,9 +52,6 @@ UIColor *yelpColor;
 {
     [super viewDidLoad];
     
-    // yelp color
-    yelpColor = [UIColor colorWithRed:196/255.0f green:18/255.0f blue:0/255.0f alpha:1.0f];
-    
     // configure table view
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -59,10 +60,15 @@ UIColor *yelpColor;
     [self.tableView registerNib:[UINib nibWithNibName:@"BusinessCell" bundle:nil] forCellReuseIdentifier:@"BusinessCell"];
 
     // navigation bar
-    //self.navigationController.navigationBar.barTintColor = yelpColor;
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:196/255.0f green:18/255.0f blue:0/255.0f alpha:1.0f];
     
     // filter button
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filters" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"filter"] style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"list"] style:UIBarButtonItemStylePlain target:self action:@selector(onToggleView)];
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+    self.activeView = 0;
     
     // search bar
     UISearchBar *searchBar = [[UISearchBar alloc] init];
@@ -73,6 +79,15 @@ UIColor *yelpColor;
     // progress hud
     [SVProgressHUD setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5]];
     [SVProgressHUD setForegroundColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:0.9]];
+    
+    // infinite loading
+    UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [loadingView startAnimating];
+    loadingView.center = tableFooterView.center;
+    [tableFooterView addSubview:loadingView];
+    self.tableView.tableFooterView = tableFooterView;
+    tableFooterView.hidden = YES;
     
     // fetch some data
     [self fetchBusinesses];
@@ -96,6 +111,10 @@ UIColor *yelpColor;
     
     cell.business = self.businesses[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    if (indexPath.row == self.businesses.count - 1 && self.businesses.count < self.totalCount) {
+        [self fetchMoreBusinesses];
+    }
     
     return cell;
 }
@@ -127,22 +146,59 @@ UIColor *yelpColor;
 
 -(void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params {
     [SVProgressHUD show];
+    self.requestInFlight = YES;
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
-        //NSLog(@"response: %@", response);
-        
         NSArray *businessesDictionaries = response[@"businesses"];
+        self.totalCount = [response[@"total"] integerValue];
         
-        self.businesses = [Business businessesWithDictionaries:businessesDictionaries];
-        
+        self.businesses = [Business businessesWithDictionaries:businessesDictionaries startingAtOffset:0];
+
+        [self showOrHideTableFooter];
         [self.tableView reloadData];
-
-        [SVProgressHUD dismiss];
-
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //NSLog(@"error: %@", [error description]);
         [SVProgressHUD dismiss];
+        self.requestInFlight = NO;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+        self.requestInFlight = NO;
     }];
+}
+
+-(void)fetchMoreBusinesses {
+    if (self.requestInFlight) {
+        return;
+    }
+    
+    NSMutableDictionary *filtersWithOffset = [NSMutableDictionary dictionaryWithDictionary:self.filters];
+    filtersWithOffset[@"offset"] = @(self.businesses.count);
+    
+    self.requestInFlight = YES;
+    [self.client searchWithTerm:self.searchTerm params:filtersWithOffset success:^(AFHTTPRequestOperation *operation, id response) {
+        NSArray *businessesDictionaries = response[@"businesses"];
+        self.totalCount = [response[@"total"] integerValue];
+        
+        NSArray *businesses = [Business businessesWithDictionaries:businessesDictionaries startingAtOffset:(int)self.businesses.count];
+        NSMutableArray *merged = [NSMutableArray arrayWithArray:self.businesses];
+        [merged addObjectsFromArray:businesses];
+        
+        self.businesses = merged;
+
+        [self showOrHideTableFooter];
+        [self.tableView reloadData];
+        
+        self.requestInFlight = NO;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        self.requestInFlight = NO;
+    }];
+    
+}
+
+-(void)showOrHideTableFooter {
+    if (self.businesses.count < self.totalCount) {
+        self.tableView.tableFooterView.hidden = NO;
+    } else {
+        self.tableView.tableFooterView.hidden = YES;
+    }
 }
 
 -(void)onFilterButton {
@@ -152,6 +208,16 @@ UIColor *yelpColor;
     vc.delegate = self;
     
     [self presentViewController:nvc animated:YES completion:nil];
+}
+
+-(void)onToggleView {
+    if (self.activeView == 0) { // list
+        [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"map"]];
+        self.activeView = 1;
+    } else if(self.activeView == 1) { // map
+        [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"list"]];
+        self.activeView = 0;
+    }
 }
 
 

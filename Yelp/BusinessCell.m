@@ -41,13 +41,13 @@
     
     [self.posterView setImageWithURL:[NSURL URLWithString:business.imageUrl]];
     [self.ratingImageView setImageWithURL:[NSURL URLWithString:business.ratingImageUrl]];
-    self.nameLabel.text = business.name;
+    self.nameLabel.text = [NSString stringWithFormat:@"%d. %@", business.index + 1, business.name];
     self.ratingLabel.text = [NSString stringWithFormat:@"%ld Reviews", business.numReviews];
     self.addressLabel.text = business.address;
     self.categoriesLabel.text = business.categories;
     self.distanceLabel.text = [NSString stringWithFormat:@"%0.2f mi", business.distance];
-    // totally artificial way to randomize the dollar signs:
-    //self.priceLabel.text = [@"" stringByPaddingToLength:(business.numReviews % 3 + 1) withString:@"$" startingAtIndex:0];
+    // totally superficial way to randomize the dollar signs:
+    self.priceLabel.text = [@"" stringByPaddingToLength:(business.numReviews % 3 + 1) withString:@"$" startingAtIndex:0];
 }
 
 -(void)layoutSubviews {

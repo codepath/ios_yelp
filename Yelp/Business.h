@@ -17,7 +17,8 @@
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *categories;
 @property (nonatomic, assign) CGFloat distance;
+@property (nonatomic, assign) int index;
 
-+ (NSArray *)businessesWithDictionaries:(NSArray *)dictionaries;
++ (NSArray *)businessesWithDictionaries:(NSArray *)dictionaries startingAtOffset:(int)offset;
 
 @end

@@ -10,7 +10,7 @@
 
 @implementation Business
 
-- (id) initWithDictionary:(NSDictionary *)dictionary {
+- (id) initWithDictionary:(NSDictionary *)dictionary atIndex:(int)i {
     self = [super init];
     
     if (self) {
@@ -19,6 +19,7 @@
         self.numReviews = [dictionary[@"review_count"] integerValue];
         self.imageUrl = dictionary[@"image_url"];
         self.distance = [dictionary[@"distance"] integerValue] * 0.000621371 /*miles per meter*/;
+        self.index = i;
 
         // address
         NSArray *addresses = [dictionary valueForKeyPath:@"location.address"];
@@ -44,10 +45,11 @@
     return self;
 }
 
-+ (NSArray *)businessesWithDictionaries:(NSArray *)dictionaries {
++ (NSArray *)businessesWithDictionaries:(NSArray *)dictionaries startingAtOffset:(int)offset {
     NSMutableArray *businesses = [NSMutableArray array];
-    for (NSDictionary *dictionary in dictionaries) {
-        Business *business = [[Business alloc] initWithDictionary:dictionary];
+    for (int i = 0; i < dictionaries.count; i++) {
+        NSDictionary *dictionary = dictionaries[i];
+        Business *business = [[Business alloc] initWithDictionary:dictionary atIndex:(i + offset)];
         [businesses addObject:business];
     }
     
