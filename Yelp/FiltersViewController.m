@@ -303,7 +303,6 @@ int const RADIUS_SECTION_INDEX = 1;
         if (cell) {
             [cell setOn:(self.sorts[i][@"code"] == self.sortBy) animated:YES];
         }
-        
     }
 }
 

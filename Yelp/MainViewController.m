@@ -12,6 +12,8 @@
 #import "BusinessCell.h"
 #import "FiltersViewController.h"
 #import "SVProgressHUD.h"
+#import <MapKit/MapKit.h>
+#import "BusinessLocation.h"
 
 NSString * const kYelpConsumerKey = @"UgcPymh8Mrzi96l3sxyr-w";
 NSString * const kYelpConsumerSecret = @"vuYqZdxZiiYXqkOc7hYChJJ1s-8";
@@ -19,11 +21,13 @@ NSString * const kYelpToken = @"P3AepoF3ap3ceU_p5L7ia04gJ0pNzYYL";
 NSString * const kYelpTokenSecret = @"rdIU15RaiP5N7zz-m-2YV4P1DHA";
 NSString * const defaultSearchTerm = @"Restaurants";
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate, UISearchBarDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate, UISearchBarDelegate, MKMapViewDelegate>
 
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSArray *businesses;
+@property (nonatomic, strong) NSDictionary *region;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) NSDictionary *filters;
 @property (nonatomic, strong) NSString* searchTerm;
 @property (nonatomic, assign) NSInteger totalCount;
@@ -66,7 +70,7 @@ int offset = 0;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"filter"] style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"list"] style:UIBarButtonItemStylePlain target:self action:@selector(onToggleView)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map"] style:UIBarButtonItemStylePlain target:self action:@selector(onToggleView)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     self.activeView = 0;
     
@@ -88,9 +92,14 @@ int offset = 0;
     [tableFooterView addSubview:loadingView];
     self.tableView.tableFooterView = tableFooterView;
     tableFooterView.hidden = YES;
+
+    
+    // map view
+    self.mapView.delegate = self;
     
     // fetch some data
     [self fetchBusinesses];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -137,6 +146,25 @@ int offset = 0;
     [self fetchBusinesses];
 }
 
+#pragma mark - Map view delegate methods
+//-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+//    if ([annotation isKindOfClass:[BusinessLocation class]]) {
+//        MKAnnotationView *annotationView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:@"BusinessLocation"];
+//        
+//        if (annotationView == nil) {
+//            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"BusinessLocation"];
+//            annotationView.enabled = YES;
+//            annotationView.canShowCallout = YES;
+//            annotationView.image = [UIImage imageNamed:@"filter"];
+//        } else {
+//            annotationView.annotation = annotation;
+//        }
+//        
+//        return annotationView;
+//    }
+//    return nil;
+//}
+
 
 #pragma mark - Private methods
 
@@ -148,10 +176,13 @@ int offset = 0;
     [SVProgressHUD show];
     self.requestInFlight = YES;
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
+        NSLog(@"%@", response);
         NSArray *businessesDictionaries = response[@"businesses"];
         self.totalCount = [response[@"total"] integerValue];
         
         self.businesses = [Business businessesWithDictionaries:businessesDictionaries startingAtOffset:0];
+        self.region = response[@"region"];
+        [self plotPointsOnMap];
 
         [self showOrHideTableFooter];
         [self.tableView reloadData];
@@ -182,6 +213,8 @@ int offset = 0;
         [merged addObjectsFromArray:businesses];
         
         self.businesses = merged;
+        self.region = response[@"region"];
+        [self plotPointsOnMap];
 
         [self showOrHideTableFooter];
         [self.tableView reloadData];
@@ -212,12 +245,46 @@ int offset = 0;
 
 -(void)onToggleView {
     if (self.activeView == 0) { // list
-        [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"map"]];
-        self.activeView = 1;
-    } else if(self.activeView == 1) { // map
         [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"list"]];
+        self.activeView = 1;
+        self.mapView.hidden = false;
+        self.tableView.hidden = true;
+        
+    } else if(self.activeView == 1) { // map
+
+        [self.navigationItem.rightBarButtonItem setImage:[UIImage imageNamed:@"map"]];
         self.activeView = 0;
+        self.mapView.hidden = true;
+        self.tableView.hidden = false;
     }
+}
+
+-(void)plotPointsOnMap {
+    // center map
+    CLLocationCoordinate2D zoomLocation;
+    zoomLocation.latitude = [[self.region valueForKeyPath:@"center.latitude"] floatValue];
+    zoomLocation.longitude = [[self.region valueForKeyPath:@"center.longitude"] floatValue];
+    CLLocationDegrees latitudeDelta = [[self.region valueForKeyPath:@"span.latitude_delta"] floatValue];
+    CLLocationDegrees longitudeDelta = [[self.region valueForKeyPath:@"span.longitude_delta"] floatValue];
+    
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMake(zoomLocation, MKCoordinateSpanMake(latitudeDelta, longitudeDelta));
+    
+    [self.mapView setRegion:viewRegion animated:YES];
+    
+    // clear old pins
+    for (id<MKAnnotation> annotation in self.mapView.annotations) {
+        [self.mapView removeAnnotation:annotation];
+    }
+    
+    // add new pins
+    for (Business* business in self.businesses) {
+        BusinessLocation *annotation = [[BusinessLocation alloc] initWithBusiness:business];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mapView addAnnotation:annotation];
+        });
+    }
+    
 }
 
 

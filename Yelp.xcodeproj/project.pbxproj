@@ -16,6 +16,8 @@
 		339005EF1A8F3A4600FBFC81 /* ShowMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 339005ED1A8F3A4600FBFC81 /* ShowMoreCell.xib */; };
 		339005F51A8F4EAE00FBFC81 /* ExpansionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 339005F31A8F4EAE00FBFC81 /* ExpansionCell.m */; };
 		339005F61A8F4EAE00FBFC81 /* ExpansionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 339005F41A8F4EAE00FBFC81 /* ExpansionCell.xib */; };
+		339006021A90BC8000FBFC81 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 339006011A90BC8000FBFC81 /* MapKit.framework */; };
+		339006041A90BF4800FBFC81 /* BusinessLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 339006031A90BF4800FBFC81 /* BusinessLocation.m */; };
 		33D5ACF61A8C4079000A9631 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5ACF41A8C4079000A9631 /* FiltersViewController.m */; };
 		33D5ACF71A8C4079000A9631 /* FiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33D5ACF51A8C4079000A9631 /* FiltersViewController.xib */; };
 		33D5ACFB1A8C41CA000A9631 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5ACF91A8C41CA000A9631 /* SwitchCell.m */; };
@@ -63,6 +65,9 @@
 		339005F21A8F4EAE00FBFC81 /* ExpansionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpansionCell.h; sourceTree = "<group>"; };
 		339005F31A8F4EAE00FBFC81 /* ExpansionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpansionCell.m; sourceTree = "<group>"; };
 		339005F41A8F4EAE00FBFC81 /* ExpansionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpansionCell.xib; sourceTree = "<group>"; };
+		339006011A90BC8000FBFC81 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		339006031A90BF4800FBFC81 /* BusinessLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessLocation.m; sourceTree = "<group>"; };
+		339006051A90BF6800FBFC81 /* BusinessLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BusinessLocation.h; sourceTree = "<group>"; };
 		33D5ACF31A8C4079000A9631 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
 		33D5ACF41A8C4079000A9631 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
 		33D5ACF51A8C4079000A9631 /* FiltersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FiltersViewController.xib; sourceTree = "<group>"; };
@@ -102,6 +107,7 @@
 			files = (
 				42FD6C4D18DC286B000BF2B9 /* CoreGraphics.framework in Frameworks */,
 				42FD6C4F18DC286B000BF2B9 /* UIKit.framework in Frameworks */,
+				339006021A90BC8000FBFC81 /* MapKit.framework in Frameworks */,
 				42FD6C4B18DC286B000BF2B9 /* Foundation.framework in Frameworks */,
 				63E591F41F684901AF8C1C19 /* libPods.a in Frameworks */,
 			);
@@ -125,6 +131,8 @@
 			children = (
 				3380FE271A8B530C002574E1 /* Business.h */,
 				3380FE281A8B530C002574E1 /* Business.m */,
+				339006031A90BF4800FBFC81 /* BusinessLocation.m */,
+				339006051A90BF6800FBFC81 /* BusinessLocation.h */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -196,6 +204,7 @@
 		42FD6C4918DC286B000BF2B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				339006011A90BC8000FBFC81 /* MapKit.framework */,
 				42FD6C4A18DC286B000BF2B9 /* Foundation.framework */,
 				42FD6C4C18DC286B000BF2B9 /* CoreGraphics.framework */,
 				42FD6C4E18DC286B000BF2B9 /* UIKit.framework */,
@@ -307,6 +316,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = codepath;
 				TargetAttributes = {
+					42FD6C4618DC286A000BF2B9 = {
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					42FD6C6118DC286B000BF2B9 = {
 						TestTargetID = 42FD6C4618DC286A000BF2B9;
 					};
@@ -401,6 +417,7 @@
 				42FD6C5B18DC286B000BF2B9 /* AppDelegate.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
+				339006041A90BF4800FBFC81 /* BusinessLocation.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 				339005EE1A8F3A4600FBFC81 /* ShowMoreCell.m in Sources */,
 				331CA42D1A8DF18C00DB2192 /* SliderCell.m in Sources */,

@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="mapView" destination="h1Z-ya-i0v" id="jhY-x9-Q44"/>
                 <outlet property="tableView" destination="3rG-iJ-Esz" id="cMv-Se-DVb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,13 +22,23 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                 </tableView>
+                <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="h1Z-ya-i0v">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="dp8-1O-vsz"/>
+                    </connections>
+                </mapView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="3rG-iJ-Esz" secondAttribute="bottom" id="A6I-L5-2Mj"/>
                 <constraint firstItem="3rG-iJ-Esz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Ah5-la-nxU"/>
+                <constraint firstItem="h1Z-ya-i0v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="PJf-72-jPm"/>
+                <constraint firstItem="h1Z-ya-i0v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="auc-7A-DZI"/>
                 <constraint firstItem="3rG-iJ-Esz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bJW-fA-Z62"/>
+                <constraint firstAttribute="bottom" secondItem="h1Z-ya-i0v" secondAttribute="bottom" id="kNc-HM-10N"/>
                 <constraint firstAttribute="trailing" secondItem="3rG-iJ-Esz" secondAttribute="trailing" id="sSm-o0-naC"/>
+                <constraint firstAttribute="trailing" secondItem="h1Z-ya-i0v" secondAttribute="trailing" id="zac-xI-aHd"/>
             </constraints>
         </view>
     </objects>
