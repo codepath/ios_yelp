@@ -16,11 +16,13 @@
     if (self) {
         self.name = dictionary[@"name"];
         self.ratingImageUrl = dictionary[@"rating_img_url"];
+        self.ratingImageUrlLarge = dictionary[@"rating_img_url_large"];
         self.numReviews = [dictionary[@"review_count"] integerValue];
         self.imageUrl = dictionary[@"image_url"];
         self.distance = [dictionary[@"distance"] integerValue] * 0.000621371 /*miles per meter*/;
         self.latitude = [[dictionary valueForKeyPath:@"location.coordinate.latitude"] floatValue];
         self.longitude = [[dictionary valueForKeyPath:@"location.coordinate.longitude"] floatValue];
+        self.phone = dictionary[@"display_phone"];
         
         self.index = i;
 

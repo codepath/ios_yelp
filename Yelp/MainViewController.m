@@ -6,14 +6,15 @@
 //  Copyright (c) 2014 codepath. All rights reserved.
 //
 
+#import <MapKit/MapKit.h>
 #import "MainViewController.h"
 #import "YelpClient.h"
 #import "Business.h"
 #import "BusinessCell.h"
 #import "FiltersViewController.h"
 #import "SVProgressHUD.h"
-#import <MapKit/MapKit.h>
 #import "BusinessLocation.h"
+#import "BusinessViewController.h"
 
 NSString * const kYelpConsumerKey = @"UgcPymh8Mrzi96l3sxyr-w";
 NSString * const kYelpConsumerSecret = @"vuYqZdxZiiYXqkOc7hYChJJ1s-8";
@@ -33,6 +34,7 @@ NSString * const defaultSearchTerm = @"Restaurants";
 @property (nonatomic, assign) NSInteger totalCount;
 @property (nonatomic, assign) BOOL requestInFlight;
 @property (nonatomic, assign) NSInteger activeView; // 0 = list, 1 = map
+@property (weak, nonatomic) IBOutlet UILabel *networkError;
 
 -(void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params;
 
@@ -65,6 +67,7 @@ int offset = 0;
 
     // navigation bar
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:196/255.0f green:18/255.0f blue:0/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.translucent = NO;
     
     // filter button
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"filter"] style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
@@ -97,6 +100,9 @@ int offset = 0;
     // map view
     self.mapView.delegate = self;
     
+    // network error
+    self.networkError.hidden = YES;
+    
     // fetch some data
     [self fetchBusinesses];
 
@@ -119,13 +125,18 @@ int offset = 0;
     BusinessCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BusinessCell"];
     
     cell.business = self.businesses[indexPath.row];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (indexPath.row == self.businesses.count - 1 && self.businesses.count < self.totalCount) {
         [self fetchMoreBusinesses];
     }
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self navigateToBusiness:self.businesses[indexPath.row]];
 }
 
 #pragma mark - Filter delegate methods
@@ -147,23 +158,33 @@ int offset = 0;
 }
 
 #pragma mark - Map view delegate methods
-//-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-//    if ([annotation isKindOfClass:[BusinessLocation class]]) {
-//        MKAnnotationView *annotationView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:@"BusinessLocation"];
-//        
-//        if (annotationView == nil) {
-//            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"BusinessLocation"];
-//            annotationView.enabled = YES;
-//            annotationView.canShowCallout = YES;
-//            annotationView.image = [UIImage imageNamed:@"filter"];
-//        } else {
-//            annotationView.annotation = annotation;
-//        }
-//        
-//        return annotationView;
-//    }
-//    return nil;
-//}
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    if ([annotation isKindOfClass:[BusinessLocation class]]) {
+        
+        MKAnnotationView *annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"BusinessLocation"];
+
+        annotationView.enabled = YES;
+        annotationView.canShowCallout = YES;
+        
+        // For the first 10 items, show a number in the pin
+        NSInteger index = (NSInteger)((BusinessLocation *) annotation).business.index;
+        if (index < 9) {
+            NSString *text = [NSString stringWithFormat:@"%ld", index + 1];
+            annotationView.image = [self drawText:text inImage:annotationView.image];
+        }
+        
+        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        
+        return annotationView;
+    }
+    return nil;
+}
+
+-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    if ([view.annotation isKindOfClass:[BusinessLocation class]]) {
+        [self navigateToBusiness:((BusinessLocation *)view.annotation).business];
+    }
+}
 
 
 #pragma mark - Private methods
@@ -173,6 +194,8 @@ int offset = 0;
 }
 
 -(void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params {
+    self.networkError.hidden = YES;
+
     [SVProgressHUD show];
     self.requestInFlight = YES;
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
@@ -192,6 +215,7 @@ int offset = 0;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         self.requestInFlight = NO;
+        self.networkError.hidden = NO;
     }];
 }
 
@@ -199,7 +223,9 @@ int offset = 0;
     if (self.requestInFlight) {
         return;
     }
-    
+
+    self.networkError.hidden = YES;
+
     NSMutableDictionary *filtersWithOffset = [NSMutableDictionary dictionaryWithDictionary:self.filters];
     filtersWithOffset[@"offset"] = @(self.businesses.count);
     
@@ -222,6 +248,8 @@ int offset = 0;
         self.requestInFlight = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.requestInFlight = NO;
+        self.networkError.hidden = NO;
+
     }];
     
 }
@@ -279,13 +307,45 @@ int offset = 0;
     // add new pins
     for (Business* business in self.businesses) {
         BusinessLocation *annotation = [[BusinessLocation alloc] initWithBusiness:business];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.mapView addAnnotation:annotation];
-        });
+        [self.mapView addAnnotation:annotation];
     }
     
 }
 
+-(UIImage *) drawText:(NSString *) text
+             inImage:(UIImage *) image {
+
+
+    UIGraphicsBeginImageContextWithOptions(image.size, NO, 2.0f);
+    //UIGraphicsBeginImageContext(image.size);
+    
+    [image drawInRect:CGRectMake(0, 0, image.size.width,image.size.height)];
+
+    // draw a small red circle over the annoying white glare
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(context, 5.0);
+    CGContextSetRGBFillColor(context, 255, 0, 0, 1.0);
+    CGContextFillEllipseInRect(context, CGRectMake(3, 3, 5, 5));
+    
+    CGPoint point = CGPointMake(4, 0);
+    [text drawInRect:CGRectIntegral(CGRectMake(point.x, point.y, image.size.width, image.size.height))
+      withAttributes:@{
+                       NSFontAttributeName:[UIFont boldSystemFontOfSize:12],
+                       NSForegroundColorAttributeName:[UIColor whiteColor]
+                       }
+     ];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
+-(void)navigateToBusiness:(Business *)business {
+    BusinessViewController *vc = [[BusinessViewController alloc] init];
+    
+    vc.business = business;
+    
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 @end

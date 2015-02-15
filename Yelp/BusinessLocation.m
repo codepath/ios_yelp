@@ -10,7 +10,6 @@
 
 
 @interface BusinessLocation ()
-@property (nonatomic, strong) Business *business;
 @end
 
 @implementation BusinessLocation

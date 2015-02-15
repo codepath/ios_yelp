@@ -18,6 +18,7 @@ PODS:
   - AFNetworking/UIKit (2.2.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - APParallaxHeader (0.1.6)
   - BDBOAuth1Manager (1.2.0):
     - AFNetworking/NSURLConnection (~> 2.2.0)
     - AFNetworking/NSURLSession (~> 2.2.0)
@@ -25,11 +26,13 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - APParallaxHeader
   - BDBOAuth1Manager
   - SVProgressHUD
 
 SPEC CHECKSUMS:
   AFNetworking: 8dde8c8a6597ad95dac332a593c27e541bc87371
+  APParallaxHeader: 6e7cc27c052be34e1a5655dc2fab6c40eecbbe55
   BDBOAuth1Manager: 468477f0425ce24b3a19a34bbf176fac11225232
   SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
 

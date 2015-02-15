@@ -16,6 +16,8 @@
 
 @interface BusinessLocation : NSObject <MKAnnotation>
 
+@property (nonatomic, strong) Business *business;
+
 - (id)initWithBusiness:(Business *)business;
 - (MKMapItem *)mapItem;
 
