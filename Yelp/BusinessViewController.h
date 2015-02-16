@@ -12,5 +12,6 @@
 @interface BusinessViewController : UIViewController
 
 @property (nonatomic, strong) Business *business;
+@property (nonatomic, strong) UIImage *placeholderImage;
 
 @end

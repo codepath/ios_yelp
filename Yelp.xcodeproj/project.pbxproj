@@ -22,6 +22,7 @@
 		3390060A1A91141800FBFC81 /* BusinessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 339006081A91141800FBFC81 /* BusinessViewController.xib */; };
 		3390060E1A91156900FBFC81 /* DetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3390060C1A91156900FBFC81 /* DetailsCell.m */; };
 		3390060F1A91156900FBFC81 /* DetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3390060D1A91156900FBFC81 /* DetailsCell.xib */; };
+		339006131A91A7DD00FBFC81 /* UIImageView+NSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 339006121A91A7DD00FBFC81 /* UIImageView+NSAdditions.m */; };
 		33D5ACF61A8C4079000A9631 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5ACF41A8C4079000A9631 /* FiltersViewController.m */; };
 		33D5ACF71A8C4079000A9631 /* FiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33D5ACF51A8C4079000A9631 /* FiltersViewController.xib */; };
 		33D5ACFB1A8C41CA000A9631 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D5ACF91A8C41CA000A9631 /* SwitchCell.m */; };
@@ -78,6 +79,8 @@
 		3390060B1A91156900FBFC81 /* DetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsCell.h; sourceTree = "<group>"; };
 		3390060C1A91156900FBFC81 /* DetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsCell.m; sourceTree = "<group>"; };
 		3390060D1A91156900FBFC81 /* DetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailsCell.xib; sourceTree = "<group>"; };
+		339006111A91A7DD00FBFC81 /* UIImageView+NSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+NSAdditions.h"; sourceTree = "<group>"; };
+		339006121A91A7DD00FBFC81 /* UIImageView+NSAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+NSAdditions.m"; sourceTree = "<group>"; };
 		33D5ACF31A8C4079000A9631 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
 		33D5ACF41A8C4079000A9631 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
 		33D5ACF51A8C4079000A9631 /* FiltersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FiltersViewController.xib; sourceTree = "<group>"; };
@@ -172,6 +175,15 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		339006101A91A7CB00FBFC81 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				339006111A91A7DD00FBFC81 /* UIImageView+NSAdditions.h */,
+				339006121A91A7DD00FBFC81 /* UIImageView+NSAdditions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		420474F318DC297600E88E07 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +245,7 @@
 		42FD6C5018DC286B000BF2B9 /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
+				339006101A91A7CB00FBFC81 /* Categories */,
 				3380FE2A1A8B591A002574E1 /* Views */,
 				3380FE261A8B52DE002574E1 /* Models */,
 				420474F318DC297600E88E07 /* API */,
@@ -436,6 +449,7 @@
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
 				339006041A90BF4800FBFC81 /* BusinessLocation.m in Sources */,
+				339006131A91A7DD00FBFC81 /* UIImageView+NSAdditions.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 				339005EE1A8F3A4600FBFC81 /* ShowMoreCell.m in Sources */,
 				331CA42D1A8DF18C00DB2192 /* SliderCell.m in Sources */,

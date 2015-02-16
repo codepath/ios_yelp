@@ -11,6 +11,7 @@
 @interface Business : NSObject
 
 @property (nonatomic, strong) NSString *imageUrl;
+@property (nonatomic, strong) NSString *imageUrlLarge;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *ratingImageUrl;
 @property (nonatomic, strong) NSString *ratingImageUrlLarge;

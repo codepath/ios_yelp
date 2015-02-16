@@ -8,6 +8,7 @@
 
 #import "BusinessCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIImageView+NSAdditions.h"
 
 @interface BusinessCell ()
 
@@ -39,7 +40,8 @@
 -(void)setBusiness:(Business *) business {
     _business = business;
     
-    [self.posterView setImageWithURL:[NSURL URLWithString:business.imageUrl]];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:business.imageUrl]];
+    [self.posterView fadeInImageWithURLRequest:request placeholderImage:nil];
     [self.ratingImageView setImageWithURL:[NSURL URLWithString:business.ratingImageUrl]];
     self.nameLabel.text = [NSString stringWithFormat:@"%d. %@", business.index + 1, business.name];
     self.ratingLabel.text = [NSString stringWithFormat:@"%ld Reviews", business.numReviews];
