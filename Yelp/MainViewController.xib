@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="mapView" destination="h1Z-ya-i0v" id="jhY-x9-Q44"/>
+                <outlet property="networkError" destination="47D-lJ-HgC" id="gcY-m8-sqM"/>
+                <outlet property="tableView" destination="3rG-iJ-Esz" id="cMv-Se-DVb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,17 +18,47 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i3A-Pd-idb">
-                    <rect key="frame" x="137" y="240" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3rG-iJ-Esz">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                </tableView>
+                <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="h1Z-ya-i0v">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="dp8-1O-vsz"/>
+                    </connections>
+                </mapView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⚠ Network Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47D-lJ-HgC">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.70999999999999996" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="53" id="Oat-nc-yQI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="3rG-iJ-Esz" secondAttribute="bottom" id="A6I-L5-2Mj"/>
+                <constraint firstItem="3rG-iJ-Esz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Ah5-la-nxU"/>
+                <constraint firstItem="47D-lJ-HgC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="MTr-O8-wh2"/>
+                <constraint firstItem="h1Z-ya-i0v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="PJf-72-jPm"/>
+                <constraint firstItem="h1Z-ya-i0v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="auc-7A-DZI"/>
+                <constraint firstItem="3rG-iJ-Esz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bJW-fA-Z62"/>
+                <constraint firstItem="47D-lJ-HgC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bwm-bm-MXh"/>
+                <constraint firstAttribute="bottom" secondItem="h1Z-ya-i0v" secondAttribute="bottom" id="kNc-HM-10N"/>
+                <constraint firstAttribute="trailing" secondItem="47D-lJ-HgC" secondAttribute="trailing" id="pJr-Vf-ehn"/>
+                <constraint firstAttribute="trailing" secondItem="3rG-iJ-Esz" secondAttribute="trailing" id="sSm-o0-naC"/>
+                <constraint firstAttribute="trailing" secondItem="h1Z-ya-i0v" secondAttribute="trailing" id="zac-xI-aHd"/>
+            </constraints>
         </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>
