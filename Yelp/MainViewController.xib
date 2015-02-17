@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="sdController2" destination="qad-zt-Ds2" id="6OQ-Lf-cyw"/>
+                <outlet property="searchBar" destination="RDh-rv-8J6" id="ABj-aV-zUA"/>
+                <outlet property="searchDisplayController" destination="qad-zt-Ds2" id="lRb-aH-nbG"/>
+                <outlet property="tableView" destination="XHf-QD-yw4" id="awI-JX-pRj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,16 +20,50 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i3A-Pd-idb">
-                    <rect key="frame" x="137" y="240" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
                     <state key="normal" title="Button">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="RDh-rv-8J6">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="5Y6-T3-bzN"/>
+                        <constraint firstAttribute="height" constant="44" id="YzQ-gN-3YV"/>
+                    </constraints>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="kOm-Uy-mtZ"/>
+                    </connections>
+                </searchBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XHf-QD-yw4">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <constraints>
+                <constraint firstItem="RDh-rv-8J6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Msh-q7-ooY"/>
+                <constraint firstItem="RDh-rv-8J6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="OUY-Jm-axH"/>
+                <constraint firstItem="XHf-QD-yw4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Pbl-8I-cUk"/>
+                <constraint firstItem="XHf-QD-yw4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="QJQ-Xo-dJb"/>
+                <constraint firstAttribute="trailing" secondItem="XHf-QD-yw4" secondAttribute="trailing" id="fNX-jr-pIS"/>
+                <constraint firstAttribute="bottom" secondItem="XHf-QD-yw4" secondAttribute="bottom" id="t0i-h5-EHv"/>
+            </constraints>
         </view>
+        <searchDisplayController id="qad-zt-Ds2">
+            <connections>
+                <outlet property="delegate" destination="-1" id="HbD-VI-u8f"/>
+                <outlet property="searchBar" destination="RDh-rv-8J6" id="PjD-5U-joA"/>
+                <outlet property="searchContentsController" destination="-1" id="o3W-J1-ode"/>
+                <outlet property="searchResultsDataSource" destination="-1" id="ORj-O5-roj"/>
+                <outlet property="searchResultsDelegate" destination="-1" id="hYn-vm-dP8"/>
+            </connections>
+        </searchDisplayController>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>
