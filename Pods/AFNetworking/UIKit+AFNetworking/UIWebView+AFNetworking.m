@@ -1,6 +1,5 @@
 // UIWebView+AFNetworking.m
-//
-// Copyright (c) 2013 AFNetworking (http://afnetworking.com)
+// Copyright (c) 2011–2015 Alamofire Software Foundation (http://alamofire.org/)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -87,7 +86,7 @@
 #pragma mark -
 
 - (void)loadRequest:(NSURLRequest *)request
-           progress:(void (^)(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite))progress
+           progress:(void (^)(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite))progress
             success:(NSString * (^)(NSHTTPURLResponse *response, NSString *HTML))success
             failure:(void (^)(NSError *error))failure
 {
@@ -112,7 +111,7 @@
 - (void)loadRequest:(NSURLRequest *)request
            MIMEType:(NSString *)MIMEType
    textEncodingName:(NSString *)textEncodingName
-           progress:(void (^)(NSUInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite))progress
+           progress:(void (^)(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite))progress
             success:(NSData * (^)(NSHTTPURLResponse *response, NSData *data))success
             failure:(void (^)(NSError *error))failure
 {
@@ -136,6 +135,11 @@
 #pragma clang diagnostic ignored "-Wgnu"
         __strong __typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf loadData:data MIMEType:(MIMEType ?: [operation.response MIMEType]) textEncodingName:(textEncodingName ?: [operation.response textEncodingName]) baseURL:[operation.response URL]];
+
+        if ([strongSelf.delegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
+            [strongSelf.delegate webViewDidFinishLoad:strongSelf];
+        }
+
 #pragma clang diagnostic pop
     } failure:^(AFHTTPRequestOperation * __unused operation, NSError *error) {
         if (failure) {
@@ -144,6 +148,10 @@
     }];
 
     [self.af_HTTPRequestOperation start];
+
+    if ([self.delegate respondsToSelector:@selector(webViewDidStartLoad:)]) {
+        [self.delegate webViewDidStartLoad:self];
+    }
 }
 
 @end

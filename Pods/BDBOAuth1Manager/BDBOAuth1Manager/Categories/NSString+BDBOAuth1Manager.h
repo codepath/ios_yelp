@@ -1,7 +1,7 @@
 //
 //  NSString+BDBOAuth1Manager.h
 //
-//  Copyright (c) 2014 Bradley David Bergeron
+//  Copyright (c) 2013-2015 Bradley David Bergeron
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -23,10 +23,46 @@
 #import <Foundation/Foundation.h>
 
 
+/**
+ *  Additions to NSString.
+ */
 #pragma mark -
 @interface NSString (BDBOAuth1Manager)
 
-- (NSString *)URLEncode;
-- (NSString *)URLDecode;
+/**
+ *  ---------------------------------------------------------------------------------------
+ * @name URL Encoding/Decoding
+ *  ---------------------------------------------------------------------------------------
+ */
+#pragma mark URL Encoding/Decoding
+
+/**
+ *  Returns a properly URL-decoded representation of the given string.
+ *
+ *  See http://cybersam.com/ios-dev/proper-url-percent-encoding-in-ios for more details.
+ *
+ *  @return URL-decoded string
+ */
+- (NSString *)bdb_URLDecode;
+
+/**
+ *  Returns a properly URL-encoded representation of the given string.
+ *
+ *  See http://cybersam.com/ios-dev/proper-url-percent-encoding-in-ios for more details.
+ *
+ *  @return URL-encoded string
+ */
+
+- (NSString *)bdb_URLEncode;
+
+
+/**
+ *  Returns the given string with the '/' and '?' characters URL-encoded.
+ *
+ *  AFNetworking 2.6 no longer encodes '/' and '?' characters. See https://github.com/AFNetworking/AFNetworking/pull/2908
+ *
+ *  @return '?' and '/' URL-encoded string
+ */
+- (NSString *)bdb_URLEncodeSlashesAndQuestionMarks;
 
 @end

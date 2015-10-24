@@ -1,7 +1,7 @@
 //
 //  NSDictionary+BDBOAuth1Manager.h
 //
-//  Copyright (c) 2014 Bradley David Bergeron
+//  Copyright (c) 2013-2015 Bradley David Bergeron
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -23,12 +23,33 @@
 #import <Foundation/Foundation.h>
 
 
+/**
+ *  Additions to NSDictionary.
+ */
 #pragma mark -
 @interface NSDictionary (BDBOAuth1Manager)
 
-+ (instancetype)dictionaryFromQueryString:(NSString *)queryString;
-- (id)initWithQueryString:(NSString *)queryString;
+/**
+ *  ---------------------------------------------------------------------------------------
+ * @name Query String
+ *  ---------------------------------------------------------------------------------------
+ */
+#pragma mark Query String
 
-- (NSString *)queryStringRepresentation;
+/**
+ *  Create a dictionary representation of a URL query string.
+ *
+ *  @param queryString URL query string.
+ *
+ *  @return Dictionary containing each key-value pair in the query string.
+ */
++ (instancetype)bdb_dictionaryFromQueryString:(NSString *)queryString;
+
+/**
+ *  Return each key-value pair in the dictionary as a URL query string.
+ *
+ *  @return URL query string reperesntation of this dictionary.
+ */
+- (NSString *)bdb_queryStringRepresentation;
 
 @end
