@@ -2,23 +2,6 @@
 
 This is a headless example of how to implement an OAuth 1.0a Yelp API client. The Yelp API provides an application token that allows applications to make unauthenticated requests to their search API.
 
-### Next steps
-
-- Check out `MainViewController.m` to see how to use the `YelpClient`.
-- Augment the search method in the `YelpClient` with whatever search parameters you want to support.
-
-### Sample request
-
-```
-self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-        
-[self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
-   NSLog(@"response: %@", response);
-} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-   NSLog(@"error: %@", [error description]);
-}];
-```
-
 ### Sample response
 
 ```
