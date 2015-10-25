@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11F304F81BDC02C1000ED8EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11F304F71BDC02C1000ED8EF /* LaunchScreen.storyboard */; };
+		11F304FF1BDC476D000ED8EF /* YelpBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 11F304FE1BDC476D000ED8EF /* YelpBusiness.m */; };
 		420474F618DC299500E88E07 /* YelpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F518DC299500E88E07 /* YelpClient.m */; };
 		420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F918DC2B2100E88E07 /* MainViewController.m */; };
 		420474FC18DC2B2100E88E07 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 420474FA18DC2B2100E88E07 /* MainViewController.xib */; };
@@ -38,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		11F304F71BDC02C1000ED8EF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		11F304FD1BDC476D000ED8EF /* YelpBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpBusiness.h; sourceTree = "<group>"; };
+		11F304FE1BDC476D000ED8EF /* YelpBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YelpBusiness.m; sourceTree = "<group>"; };
 		420474F418DC299500E88E07 /* YelpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpClient.h; sourceTree = "<group>"; };
 		420474F518DC299500E88E07 /* YelpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YelpClient.m; sourceTree = "<group>"; };
 		420474F818DC2B2100E88E07 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -89,6 +92,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11F304F91BDC20F3000ED8EF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				11F304FD1BDC476D000ED8EF /* YelpBusiness.h */,
+				11F304FE1BDC476D000ED8EF /* YelpBusiness.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		420474F318DC297600E88E07 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +155,7 @@
 		42FD6C5018DC286B000BF2B9 /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
+				11F304F91BDC20F3000ED8EF /* Models */,
 				420474F318DC297600E88E07 /* API */,
 				420474F718DC2A9200E88E07 /* View Controllers */,
 				42FD6C5918DC286B000BF2B9 /* AppDelegate.h */,
@@ -344,6 +357,7 @@
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
+				11F304FF1BDC476D000ED8EF /* YelpBusiness.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

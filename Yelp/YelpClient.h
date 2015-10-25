@@ -11,8 +11,21 @@
 
 @interface YelpClient : BDBOAuth1RequestOperationManager
 
-- (id)initWithConsumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret accessToken:(NSString *)accessToken accessSecret:(NSString *)accessSecret;
+typedef NS_ENUM(NSInteger, YelpSortMode) {
+    YelpSortModeBestMatched = 0,
+    YelpSortModeDistance = 1,
+    YelpSortModeHighestRated = 2
+};
 
-- (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
++ (instancetype)sharedInstance;
+
+- (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term
+                                completion:(void (^)(NSArray *businesses, NSError *error))completion;
+
+- (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term
+                                  sortMode:(YelpSortMode)sortMode
+                                categories:(NSArray *)categories
+                                     deals:(BOOL)hasDeal
+                                completion:(void (^)(NSArray *businesses, NSError *error))completion;
 
 @end
