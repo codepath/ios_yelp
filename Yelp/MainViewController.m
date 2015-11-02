@@ -33,10 +33,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	YelpBusinessTableViewCell *cell = [[YelpBusinessTableViewCell alloc] init];
-	cell.NameLabel.text = @"business";
-	cell.ReviewLabel.text = @"description";
-	NSLog(@"cellforrowatindexpath");
+	YelpBusinessTableViewCell *cell = [self.BusinessTableView dequeueReusableCellWithIdentifier:@"businessInfo"];
+	if (!cell) {
+		cell = [[YelpBusinessTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"businessInfo"];
+	}
+	
+	cell.BusinessLabel.text = @"business";
+	cell.AddressLabel.text = @"address";
+	NSLog([NSString stringWithFormat: @"%ld", (long)indexPath.row]);
+	NSLog(cell.BusinessLabel.text);
 	return cell;
 }
 
