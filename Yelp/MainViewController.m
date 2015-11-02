@@ -12,8 +12,7 @@
 #import "UIImageView+AFNetworking.h"
 
 @interface MainViewController () <UITableViewDataSource, UITableViewDelegate>
-
-@property (weak, nonatomic) IBOutlet UITableView *TableView;
+@property (weak, nonatomic) IBOutlet UITableView *BusinessTableView;
 @end
 
 @implementation MainViewController
@@ -21,8 +20,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"Main view controller");
-	//self.businesses.delegate = self;
-	//self.businesses.dataSource = self;
+	self.BusinessTableView.delegate = self;
+	self.BusinessTableView.dataSource = self;
+	self.BusinessTableView.estimatedRowHeight = 100;
+	self.BusinessTableView.rowHeight = UITableViewAutomaticDimension;
 	
 }
 
@@ -32,18 +33,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	YelpBusinessTableViewCell *cell = [self.TableView dequeueReusableCellWithIdentifier:@"repoInfo"];
-	
-	YelpBusiness *business = self.businesses[indexPath.row];
-	cell.NameLabel.text = business.name;
-	cell.StarLabel.text = @"Stars";
-	cell.NumberOfStarsLabel.text = @"undef.";
-	cell.ReviewLabel.text = business.description;
-	cell.NumberOfReviewsLabel.text = business.reviewCount;
-	cell.AddressLabel.text = business.address;
-	cell.GenreLabel.text = business.categories;
-	[cell.businessImage setImageWithURL:[NSURL URLWithString:business.imageUrl]];
+	YelpBusinessTableViewCell *cell = [[YelpBusinessTableViewCell alloc] init];
+	cell.NameLabel.text = @"business";
+	cell.ReviewLabel.text = @"description";
+	NSLog(@"cellforrowatindexpath");
 	return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return 100;
 }
 
 /*
