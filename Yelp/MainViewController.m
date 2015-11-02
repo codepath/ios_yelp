@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "YelpBusiness.h"
+#import "YelpClient.h"
 #import "YelpBusinessTableViewCell.h"
 #import "UIImageView+AFNetworking.h"
 
@@ -25,6 +26,15 @@
 	self.BusinessTableView.estimatedRowHeight = 100;
 	self.BusinessTableView.rowHeight = UITableViewAutomaticDimension;
 	
+	[YelpBusiness searchWithTerm:@"Restaurants"
+						sortMode:YelpSortModeBestMatched
+					  categories:@[@"burgers"]
+						   deals:NO
+					  completion:^(NSArray *businesses, NSError *error) {
+						  [self.businesses initWithArray:businesses];
+						  [self.BusinessTableView reloadData];
+					  }];
+	
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,7 +50,7 @@
 	
 	cell.BusinessLabel.text = @"business";
 	cell.AddressLabel.text = @"address";
-	NSLog([NSString stringWithFormat: @"%ld", (long)indexPath.row]);
+	NSLog([NSString stringWithFormat: @"%ld", (long)self.businesses.count]);
 	NSLog(cell.BusinessLabel.text);
 	return cell;
 }
