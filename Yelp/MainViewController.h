@@ -2,8 +2,8 @@
 //  MainViewController.h
 //  Yelp
 //
-//  Created by Timothy Lee on 3/21/14.
-//  Copyright (c) 2014 codepath. All rights reserved.
+//  Created by Alex Lester on 11/2/15.
+//  Copyright © 2015 codepath. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
