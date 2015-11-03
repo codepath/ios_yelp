@@ -21,6 +21,4 @@
 @property (nonatomic, strong) YelpBusiness *business;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbImageView;
 
-- (void) setBusiness:(YelpBusiness *)business;
-
 @end

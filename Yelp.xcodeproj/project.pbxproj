@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0583BF611BE7DFC000E63B11 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0583BF601BE7DFC000E63B11 /* MainViewController.m */; settings = {ASSET_TAGS = (); }; };
+		0583BF631BE7E1DC00E63B11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0583BF621BE7E1DC00E63B11 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
+		0583BF891BE7ED8300E63B11 /* YelpBusinessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0583BF881BE7ED8300E63B11 /* YelpBusinessTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		11F304F81BDC02C1000ED8EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11F304F71BDC02C1000ED8EF /* LaunchScreen.storyboard */; };
 		11F304FF1BDC476D000ED8EF /* YelpBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 11F304FE1BDC476D000ED8EF /* YelpBusiness.m */; };
 		420474F618DC299500E88E07 /* YelpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F518DC299500E88E07 /* YelpClient.m */; };
-		420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 420474F918DC2B2100E88E07 /* MainViewController.m */; };
-		420474FC18DC2B2100E88E07 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 420474FA18DC2B2100E88E07 /* MainViewController.xib */; };
 		42FD6C4B18DC286B000BF2B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42FD6C4A18DC286B000BF2B9 /* Foundation.framework */; };
 		42FD6C4D18DC286B000BF2B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42FD6C4C18DC286B000BF2B9 /* CoreGraphics.framework */; };
 		42FD6C4F18DC286B000BF2B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42FD6C4E18DC286B000BF2B9 /* UIKit.framework */; };
@@ -38,14 +39,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0583BF5F1BE7DFC000E63B11 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		0583BF601BE7DFC000E63B11 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		0583BF621BE7E1DC00E63B11 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		0583BF871BE7ED8300E63B11 /* YelpBusinessTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpBusinessTableViewCell.h; sourceTree = "<group>"; };
+		0583BF881BE7ED8300E63B11 /* YelpBusinessTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YelpBusinessTableViewCell.m; sourceTree = "<group>"; };
 		11F304F71BDC02C1000ED8EF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		11F304FD1BDC476D000ED8EF /* YelpBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpBusiness.h; sourceTree = "<group>"; };
 		11F304FE1BDC476D000ED8EF /* YelpBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YelpBusiness.m; sourceTree = "<group>"; };
 		420474F418DC299500E88E07 /* YelpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpClient.h; sourceTree = "<group>"; };
 		420474F518DC299500E88E07 /* YelpClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YelpClient.m; sourceTree = "<group>"; };
-		420474F818DC2B2100E88E07 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		420474F918DC2B2100E88E07 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		420474FA18DC2B2100E88E07 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		42FD6C4718DC286B000BF2B9 /* Yelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42FD6C4A18DC286B000BF2B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42FD6C4C18DC286B000BF2B9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -113,9 +116,11 @@
 		420474F718DC2A9200E88E07 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				420474F818DC2B2100E88E07 /* MainViewController.h */,
-				420474F918DC2B2100E88E07 /* MainViewController.m */,
-				420474FA18DC2B2100E88E07 /* MainViewController.xib */,
+				0583BF5F1BE7DFC000E63B11 /* MainViewController.h */,
+				0583BF601BE7DFC000E63B11 /* MainViewController.m */,
+				0583BF621BE7E1DC00E63B11 /* Main.storyboard */,
+				0583BF871BE7ED8300E63B11 /* YelpBusinessTableViewCell.h */,
+				0583BF881BE7ED8300E63B11 /* YelpBusinessTableViewCell.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -285,8 +290,8 @@
 			files = (
 				42FD6C5518DC286B000BF2B9 /* InfoPlist.strings in Resources */,
 				11F304F81BDC02C1000ED8EF /* LaunchScreen.storyboard in Resources */,
-				420474FC18DC2B2100E88E07 /* MainViewController.xib in Resources */,
 				42FD6C5D18DC286B000BF2B9 /* Images.xcassets in Resources */,
+				0583BF631BE7E1DC00E63B11 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,9 +359,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				42FD6C5B18DC286B000BF2B9 /* AppDelegate.m in Sources */,
+				0583BF891BE7ED8300E63B11 /* YelpBusinessTableViewCell.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
-				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
+				0583BF611BE7DFC000E63B11 /* MainViewController.m in Sources */,
 				11F304FF1BDC476D000ED8EF /* YelpBusiness.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

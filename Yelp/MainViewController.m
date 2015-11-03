@@ -50,8 +50,6 @@
 		cell = [[YelpBusinessTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"businessInfo"];
 	}
 	
-	//cell.business = self.businesses[indexPath.row];
-
 	YelpBusiness *biz = self.businesses[indexPath.row];
 	[cell.thumbImageView setImageWithURL:biz.imageUrl];
 	cell.BusinessLabel.text = biz.name;
