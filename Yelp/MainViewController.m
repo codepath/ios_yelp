@@ -11,10 +11,13 @@
 #import "YelpClient.h"
 #import "YelpBusinessTableViewCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "MBProgressHUD.h"
 
 @interface MainViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *BusinessTableView;
+@property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) NSArray *businesses;
+@property (nonatomic, strong) NSArray *filteredData;
 @property (nonatomic, strong) YelpClient *client;
 @end
 
@@ -24,20 +27,34 @@
     [super viewDidLoad];
 
 	
-	[YelpBusiness searchWithTerm:@"Restaurants"
-						sortMode:YelpSortModeBestMatched
-					  categories:@[@"burgers"]
-						   deals:NO
-					  completion:^(NSArray *businesses, NSError *error) {
-						  self.businesses = businesses;
-						  [self.BusinessTableView reloadData];
-					  }];
 	NSLog(@"Main view controller");
 	self.BusinessTableView.delegate = self;
 	self.BusinessTableView.dataSource = self;
 	self.BusinessTableView.estimatedRowHeight = 100;
 	self.BusinessTableView.rowHeight = UITableViewAutomaticDimension;
+	//search bar stuffs
+	self.searchBar = [[UISearchBar alloc] init];
+	self.searchBar.delegate = self;
+	[self.searchBar sizeToFit];
+	self.navigationItem.titleView = self.searchBar;
+	[self doSearch];
+	
+	
 }
+
+- (void)doSearch {
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	[YelpBusiness searchWithTerm:self.searchBar.text
+						sortMode:YelpSortModeBestMatched
+					  categories:@[@"burgers"]
+						   deals:NO
+					  completion:^(NSArray *businesses, NSError *error) {
+						  self.businesses = businesses;
+						  [MBProgressHUD hideHUDForView:self.view animated:YES];
+						  [self.BusinessTableView reloadData];
+					  }];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -62,6 +79,27 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	return self.businesses.count;
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+	[self.searchBar setShowsCancelButton:YES animated:YES];
+	return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
+	[self.searchBar setShowsCancelButton:NO animated:YES];
+	return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+	searchBar.text = @"";
+	[searchBar resignFirstResponder];
+}
+
+- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+	//self.searchSettings.searchString = searchBar.text;
+	[searchBar resignFirstResponder];
+	[self doSearch];
 }
 
 /*

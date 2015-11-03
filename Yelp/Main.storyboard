@@ -45,8 +45,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Gand Pu Buh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmX-dO-D4g">
-                                                    <rect key="frame" x="74" y="8" width="122" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1. Gand Pu Buh" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmX-dO-D4g">
+                                                    <rect key="frame" x="74" y="8" width="188" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -138,7 +138,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Pjy-f7-iCx" secondAttribute="trailing" constant="-28" id="k0t-bI-Kto"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="YELP!" id="qzK-5s-6tt"/>
+                    <navigationItem key="navigationItem" id="qzK-5s-6tt"/>
                     <connections>
                         <outlet property="BusinessTableView" destination="Pjy-f7-iCx" id="jsG-UN-lPe"/>
                     </connections>
