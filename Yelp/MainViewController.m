@@ -22,11 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"Main view controller");
-	self.BusinessTableView.delegate = self;
-	self.BusinessTableView.dataSource = self;
-	self.BusinessTableView.estimatedRowHeight = 100;
-	self.BusinessTableView.rowHeight = UITableViewAutomaticDimension;
+
 	
 	[YelpBusiness searchWithTerm:@"Restaurants"
 						sortMode:YelpSortModeBestMatched
@@ -36,7 +32,11 @@
 						  self.businesses = businesses;
 						  [self.BusinessTableView reloadData];
 					  }];
-
+	NSLog(@"Main view controller");
+	self.BusinessTableView.delegate = self;
+	self.BusinessTableView.dataSource = self;
+	self.BusinessTableView.estimatedRowHeight = 100;
+	self.BusinessTableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,13 +50,15 @@
 		cell = [[YelpBusinessTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"businessInfo"];
 	}
 	
-	if(indexPath.row <= self.businesses.count){
-		cell.business = self.businesses[indexPath.row];
-	} 
-	//cell.BusinessLabel.text = @"business";
-	//cell.AddressLabel.text = @"address";
-	//NSLog([NSString stringWithFormat: @"%ld", (long)self.businesses.count]);
-	//NSLog(cell.BusinessLabel.text);
+	//cell.business = self.businesses[indexPath.row];
+
+	YelpBusiness *biz = self.businesses[indexPath.row];
+	[cell.thumbImageView setImageWithURL:biz.imageUrl];
+	cell.BusinessLabel.text = biz.name;
+	[cell.ratingIMageView setImageWithURL:biz.ratingImageUrl];
+	cell.numberReviewsLabel.text = [NSString stringWithFormat:@"%@ Reviews", biz.reviewCount];
+	cell.AddressLabel.text = biz.address;
+	cell.distanceLabel.text = [NSString stringWithFormat:@"%@ mi", biz.distance];
 	return cell;
 }
 
