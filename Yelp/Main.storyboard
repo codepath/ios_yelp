@@ -36,6 +36,15 @@
                                                         <constraint firstAttribute="width" constant="70" id="rVY-3m-e3R"/>
                                                     </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88 Divsion street mission bay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2m7-si-2oe">
+                                                    <rect key="frame" x="74" y="43" width="143" height="12"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="143" id="8MP-Bd-XZh"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Gand Pu Buh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmX-dO-D4g">
                                                     <rect key="frame" x="74" y="8" width="122" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -43,7 +52,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thai Seafood salad" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzc-px-jC7">
-                                                    <rect key="frame" x="74" y="63" width="92" height="12"/>
+                                                    <rect key="frame" x="74" y="58" width="92" height="12"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -76,29 +85,22 @@
                                                         <constraint firstAttribute="width" constant="84" id="mMs-uJ-4aO"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88 Divsion street mission bay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2m7-si-2oe">
-                                                    <rect key="frame" x="74" y="43" width="143" height="12"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="143" id="8MP-Bd-XZh"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="2m7-si-2oe" firstAttribute="top" secondItem="bmX-dO-D4g" secondAttribute="bottom" constant="14" id="0GH-kx-VLX"/>
                                                 <constraint firstItem="bmX-dO-D4g" firstAttribute="leading" secondItem="ztW-LD-eKs" secondAttribute="trailing" constant="4" id="1lU-Mn-LLg"/>
                                                 <constraint firstItem="6Pq-Qe-TQs" firstAttribute="top" secondItem="5Kb-FW-Otx" secondAttribute="bottom" constant="5" id="3sD-QX-0gw"/>
                                                 <constraint firstItem="2m7-si-2oe" firstAttribute="leading" secondItem="ztW-LD-eKs" secondAttribute="trailing" constant="4" id="4dG-Tx-b0i"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ztW-LD-eKs" secondAttribute="bottom" constant="7" id="59c-E7-R82"/>
                                                 <constraint firstItem="ztW-LD-eKs" firstAttribute="centerY" secondItem="754-rF-dK6" secondAttribute="centerY" id="5jc-cU-yNt"/>
                                                 <constraint firstItem="oRk-cu-FKh" firstAttribute="leading" secondItem="ztW-LD-eKs" secondAttribute="trailing" constant="4" id="73S-Zk-eXG"/>
                                                 <constraint firstItem="Hzc-px-jC7" firstAttribute="leading" secondItem="ztW-LD-eKs" secondAttribute="trailing" constant="4" id="7iS-91-gjr"/>
                                                 <constraint firstItem="bmX-dO-D4g" firstAttribute="top" secondItem="754-rF-dK6" secondAttribute="topMargin" id="Bkh-oD-cjd"/>
                                                 <constraint firstItem="6Pq-Qe-TQs" firstAttribute="trailing" secondItem="754-rF-dK6" secondAttribute="trailingMargin" id="DTb-3H-R8z"/>
                                                 <constraint firstItem="oRk-cu-FKh" firstAttribute="top" secondItem="754-rF-dK6" secondAttribute="topMargin" constant="17" id="Fse-i8-Ufm"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="Hzc-px-jC7" secondAttribute="bottom" constant="7" id="Hic-9j-TYU"/>
                                                 <constraint firstItem="oRk-cu-FKh" firstAttribute="top" secondItem="754-rF-dK6" secondAttribute="topMargin" constant="17" id="ITM-ln-xxV"/>
-                                                <constraint firstItem="Hzc-px-jC7" firstAttribute="top" secondItem="2m7-si-2oe" secondAttribute="bottom" constant="8" id="KR6-lG-gAx"/>
+                                                <constraint firstItem="Hzc-px-jC7" firstAttribute="top" secondItem="2m7-si-2oe" secondAttribute="bottom" constant="3" id="KR6-lG-gAx"/>
                                                 <constraint firstItem="bmX-dO-D4g" firstAttribute="leading" secondItem="ztW-LD-eKs" secondAttribute="trailing" constant="4" id="MgU-4n-mhy"/>
                                                 <constraint firstItem="6Pq-Qe-TQs" firstAttribute="top" secondItem="754-rF-dK6" secondAttribute="topMargin" constant="20" id="VPH-j9-N7J"/>
                                                 <constraint firstItem="ztW-LD-eKs" firstAttribute="leading" secondItem="754-rF-dK6" secondAttribute="leadingMargin" constant="-8" id="VWx-Pj-8fs"/>
@@ -109,16 +111,20 @@
                                                 <constraint firstItem="Hzc-px-jC7" firstAttribute="leading" secondItem="ztW-LD-eKs" secondAttribute="trailing" constant="4" id="c6c-4m-jK4"/>
                                                 <constraint firstItem="ztW-LD-eKs" firstAttribute="top" secondItem="754-rF-dK6" secondAttribute="topMargin" id="dHD-fI-QSZ"/>
                                                 <constraint firstItem="bmX-dO-D4g" firstAttribute="top" secondItem="754-rF-dK6" secondAttribute="topMargin" id="f8Y-vZ-3y1"/>
-                                                <constraint firstItem="Hzc-px-jC7" firstAttribute="top" secondItem="2m7-si-2oe" secondAttribute="bottom" constant="8" id="fpz-Tc-giL"/>
+                                                <constraint firstItem="Hzc-px-jC7" firstAttribute="top" secondItem="2m7-si-2oe" secondAttribute="bottom" constant="3" id="fpz-Tc-giL"/>
                                                 <constraint firstItem="5Kb-FW-Otx" firstAttribute="top" secondItem="754-rF-dK6" secondAttribute="topMargin" id="jdl-kv-g3W"/>
                                                 <constraint firstItem="5Kb-FW-Otx" firstAttribute="trailing" secondItem="754-rF-dK6" secondAttribute="trailingMargin" id="s6L-3R-UWK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="AddressLabel" destination="5Kb-FW-Otx" id="76q-sd-0tV"/>
-                                            <outlet property="BusinessImageView" destination="754-rF-dK6" id="RZM-6J-sDU"/>
                                             <outlet property="BusinessLabel" destination="bmX-dO-D4g" id="yQu-D3-lIl"/>
                                             <outlet property="GenreLabel" destination="2m7-si-2oe" id="YXF-wf-Pbk"/>
+                                            <outlet property="costLabel" destination="6Pq-Qe-TQs" id="elt-f9-eKA"/>
+                                            <outlet property="distanceLabel" destination="5Kb-FW-Otx" id="2g2-ZD-j8m"/>
+                                            <outlet property="numberReviewsLabel" destination="Mcp-yR-qLS" id="0OK-5U-4p4"/>
+                                            <outlet property="ratingIMageView" destination="oRk-cu-FKh" id="Vzt-ML-w0E"/>
+                                            <outlet property="thumbImageView" destination="ztW-LD-eKs" id="p8b-hl-Rs0"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

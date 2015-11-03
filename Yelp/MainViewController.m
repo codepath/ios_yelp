@@ -36,7 +36,7 @@
 						  self.businesses = businesses;
 						  [self.BusinessTableView reloadData];
 					  }];
-	
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,15 +50,18 @@
 		cell = [[YelpBusinessTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"businessInfo"];
 	}
 	
-	cell.BusinessLabel.text = @"business";
-	cell.AddressLabel.text = @"address";
+	if(indexPath.row <= self.businesses.count){
+		cell.business = self.businesses[indexPath.row];
+	} 
+	//cell.BusinessLabel.text = @"business";
+	//cell.AddressLabel.text = @"address";
 	//NSLog([NSString stringWithFormat: @"%ld", (long)self.businesses.count]);
 	//NSLog(cell.BusinessLabel.text);
 	return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return 100;
+	return self.businesses.count;
 }
 
 /*
