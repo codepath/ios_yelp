@@ -73,7 +73,7 @@
 	[cell.ratingIMageView setImageWithURL:biz.ratingImageUrl];
 	cell.numberReviewsLabel.text = [NSString stringWithFormat:@"%@ Reviews", biz.reviewCount];
 	cell.AddressLabel.text = biz.address;
-	cell.distanceLabel.text = [NSString stringWithFormat:@"%@ mi", biz.distance];
+	cell.distanceLabel.text = [NSString stringWithFormat:@"%@", biz.distance];
 	return cell;
 }
 
