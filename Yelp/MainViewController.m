@@ -14,6 +14,8 @@
 
 @interface MainViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *BusinessTableView;
+@property (nonatomic, strong) NSArray *businesses;
+@property (nonatomic, strong) YelpClient *client;
 @end
 
 @implementation MainViewController
@@ -31,7 +33,7 @@
 					  categories:@[@"burgers"]
 						   deals:NO
 					  completion:^(NSArray *businesses, NSError *error) {
-						  [self.businesses initWithArray:businesses];
+						  self.businesses = businesses;
 						  [self.BusinessTableView reloadData];
 					  }];
 	
@@ -50,8 +52,8 @@
 	
 	cell.BusinessLabel.text = @"business";
 	cell.AddressLabel.text = @"address";
-	NSLog([NSString stringWithFormat: @"%ld", (long)self.businesses.count]);
-	NSLog(cell.BusinessLabel.text);
+	//NSLog([NSString stringWithFormat: @"%ld", (long)self.businesses.count]);
+	//NSLog(cell.BusinessLabel.text);
 	return cell;
 }
 
